@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jeffrey William Shorthill — AI Interpretability & Systems</title>
+<meta name="description" content="Independent AI interpretability and evaluation researcher. Ships production AI systems end to end. Seven published preprints on MoE routing, evaluation contamination, and safety behavior.">
+<style>
+  :root{
+    --bg:#faf9f7; --ink:#1a1a1e; --muted:#5c5c66; --line:#e4e2dd;
+    --card:#ffffff; --accent:#8a4f2d; --accent2:#2d5a8a; --chip:#f0ede8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#131316; --ink:#e8e6e1; --muted:#9a98a0; --line:#2a2a30;
+           --card:#1c1c21; --accent:#d29a6b; --accent2:#7aa7d4; --chip:#26262c; }
+  }
+  *{box-sizing:border-box; margin:0}
+  body{background:var(--bg); color:var(--ink);
+       font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       padding:0 20px}
+  main{max-width:880px; margin:0 auto; padding:56px 0 80px}
+  a{color:var(--accent2); text-decoration:none}
+  a:hover{text-decoration:underline}
+  header h1{font-size:2rem; letter-spacing:-.02em}
+  .tag{color:var(--muted); margin:6px 0 14px; font-size:1.05rem}
+  .links{display:flex; flex-wrap:wrap; gap:10px 18px; font-size:.95rem}
+  .pitch{margin:30px 0 8px; font-size:1.06rem; max-width:64ch}
+  .pitch b{color:var(--accent)}
+  h2{margin:44px 0 6px; font-size:1.15rem; text-transform:uppercase;
+     letter-spacing:.08em; color:var(--accent)}
+  h2 + p.sub{color:var(--muted); font-size:.93rem; margin-bottom:14px}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px;
+        padding:16px 18px}
+  .card h3{font-size:1rem; margin-bottom:6px}
+  .card p{font-size:.92rem; color:var(--muted)}
+  .card .doi{display:block; margin-top:10px; font-size:.82rem}
+  .status{margin-top:8px; font-size:.78rem; letter-spacing:.02em; color:var(--accent);
+          text-transform:uppercase}
+  ul.flat{list-style:none; display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+  ul.flat li{background:var(--chip); border-radius:999px; padding:3px 12px;
+             font-size:.82rem; color:var(--muted)}
+  .method{border-left:3px solid var(--accent); padding:4px 0 4px 16px; margin:12px 0;
+          font-size:.95rem}
+  .method b{display:block}
+  .method span{color:var(--muted); font-size:.9rem}
+  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line);
+         color:var(--muted); font-size:.9rem}
+  @media (max-width:600px){ header h1{font-size:1.6rem} }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Jeffrey William Shorthill</h1>
+  <p class="tag">AI interpretability &amp; evaluation research · production AI systems, end to end · Salt Lake City, UT</p>
+  <nav class="links">
+    <a href="https://github.com/jeffreywilliamportfolio">GitHub</a>
+    <a href="mailto:jeffrey.w.shorthill@gmail.com">Email</a>
+    <a href="resume_research.pdf">Resume (research)</a>
+    <a href="resume_product.pdf">Resume (product)</a>
+    <a href="https://gift-connect.org/our-work/technology-tools/">Gift Connect tools</a>
+  </nav>
+</header>
+
+<p class="pitch">
+I do two things that rarely live in one person: I <b>run an independent, publicly
+published AI-interpretability research program</b> — preregistered protocols, reported
+nulls, my own claims retired when the data turned — and I <b>ship complete consumer AI
+products solo</b>, from React Native storefronts to realtime voice agents to the GPU
+capture harnesses underneath. I build the evaluation, and I build the thing being evaluated.
+</p>
+
+<h2>The paper of record</h2>
+<p class="sub">Built at full standard: rules frozen before capture, fail-closed audits, replication before claims.</p>
+<div class="grid">
+  <div class="card">
+    <h3>In-Context Availability Reorganizes MoE Expert Routing</h3>
+    <p>Cross-generation study (Qwen3.5 + 3.6): when a model's output already sits verbatim
+    in context, layer-14 routing reorganizes under rules frozen before capture. The attention
+    carrier is located and severed; the coalition replicates across a model generation under
+    frozen predictions; intervention nulls bound the claim. Direct implication: multi-turn
+    evaluations partly measure <em>availability</em>, not capability.</p>
+    <span class="status">Confirmatory · preregistered · replicated</span>
+    <a class="doi" href="https://doi.org/10.5281/zenodo.21892999">DOI 10.5281/zenodo.21892999</a>
+  </div>
+</div>
+
+<h2>The correction record</h2>
+<p class="sub">Early results of this program were flawed. These are the public receipts of finding and fixing them — the part that makes the rest trustworthy.</p>
+<div class="grid">
+  <div class="card">
+    <h3>When Routing Entropy Tracks Length, Not Complexity</h3>
+    <p>A self-refutation: my own earlier reading of routing entropy fell to a token-position
+    confound, so I published the correction. Measured at the right position, the "complexity
+    gradient" reverses. DeepSeek V3.1 + Qwen3.5-397B, R1 replication.</p>
+    <span class="status">Published correction of my own result</span>
+    <a class="doi" href="https://doi.org/10.5281/zenodo.20779602">DOI 10.5281/zenodo.20779602</a>
+  </div>
+  <div class="card">
+    <h3>Register-Readout Artifact Bundle (e114)</h3>
+    <p>Preregistered sweeps that <em>retired my own earlier claims</em> — a specificity
+    overclaim, a lead–lag ordering that reversed under onset alignment, alternative readings
+    adjudicated away — with raw router archives and SHA-256 manifests, all public and versioned.</p>
+    <span class="status">Claims formally retired · receipts public</span>
+    <a class="doi" href="https://doi.org/10.5281/zenodo.20709736">DOI 10.5281/zenodo.20709736</a>
+  </div>
+</div>
+
+<h2>Exploratory results</h2>
+<p class="sub">Fast, small-n, honestly labeled — findings awaiting the full frozen-protocol treatment. Read them as leads, not conclusions.</p>
+<div class="grid">
+  <div class="card">
+    <h3>The Generation Half</h3>
+    <p>Expert specialization is invisible in prefill and emerges during generation —
+    one generalist wins 18/20 domains at prefill; twenty distinct per-domain experts win
+    during generation. Length-matched control; replicates at 122B.</p>
+    <span class="status">Exploratory · needs independent replication</span>
+    <a class="doi" href="https://doi.org/10.5281/zenodo.20779604">DOI 10.5281/zenodo.20779604</a>
+  </div>
+  <div class="card">
+    <h3>No Single Safety Gate</h3>
+    <p>Harm-refusal routing in Qwen3.5-35B looks distributed: suppressing the lead expert
+    collapses its routed mass yet yields zero harmful completions — routing reallocates.</p>
+    <span class="status">Exploratory · n=6/12 · self-labeled as such</span>
+    <a class="doi" href="https://doi.org/10.5281/zenodo.20786891">DOI 10.5281/zenodo.20786891</a>
+  </div>
+  <div class="card">
+    <h3>Dialect-Marked Response Audit</h3>
+    <p>Matched-pair safety-support equivalence across AAVE-marked vs. AE prompt surfaces.
+    Shipped only after an adversarial claim audit sorted every claim into held, narrowed,
+    or withdrawn — what's public is the survivor set.</p>
+    <span class="status">Post-audit narrowed claims · deterministic protocol</span>
+    <a class="doi" href="https://doi.org/10.5281/zenodo.20449546">DOI 10.5281/zenodo.20449546</a>
+  </div>
+</div>
+
+<h2>Instruments</h2>
+<p class="sub">Tools I built because the questions needed them.</p>
+<div class="grid">
+  <div class="card">
+    <h3>Jacobian lens-chat</h3>
+    <p>A chat interface that pipes a model's own residual-stream lens readout back to it in
+    real time — sham-controlled introspection experiments on an instrumented model, with
+    per-span J-state timelines and prefill capture.</p>
+  </div>
+  <div class="card">
+    <h3>MindVolume</h3>
+    <p>Native macOS (SwiftUI + Metal) app rendering Jacobian-lens captures of a 27B model as
+    an explorable 3D particle field — fly through what the model is disposed to say.</p>
+  </div>
+  <div class="card">
+    <h3>Capture harnesses</h3>
+    <p>Custom llama.cpp router-logit capture binaries and HF-hook pipelines: dense per-token
+    routing at all layers, teacher-forced position-matched designs, cross-runtime validation
+    against an independent stack.</p>
+  </div>
+</div>
+
+<h2>Methodology</h2>
+<p class="sub">The part I'd want to be hired for.</p>
+<div class="method"><b>Preregistration under version control</b>
+  <span>Analysis rules hash-frozen before capture; append-only deviation logs; pass/fail
+  declared in advance and honored — including publishing the failures.</span></div>
+<div class="method"><b>Adversarial self-review</b>
+  <span>My headline confound was found by me, attacking my own result, and published as a
+  standalone correction before anyone else could need to.</span></div>
+<div class="method"><b>Blinding that binds</b>
+  <span>A fully blinded gravitational-wave echo search whose preregistered positive control
+  failed — so the pipeline refused to unblind the result, and the sealed answer file's
+  absence is reported as the finding.</span></div>
+<ul class="flat">
+  <li>bootstrap inference</li><li>frozen prompt banks</li><li>sham controls</li>
+  <li>cross-runtime validation</li><li>token-identical interventions</li>
+  <li>public raw data + SHA-256 manifests</li>
+</ul>
+
+<h2>Shipped products</h2>
+<p class="sub">Sole engineer, design to store operations — for Gift Connect (nonprofit early-childhood program) and independently.</p>
+<div class="grid">
+  <div class="card">
+    <h3>Gift Connect Parenting Suite</h3>
+    <p>Consumer mobile app live on the App Store and Google Play: daily-habit curriculum,
+    journal, tips with push actions, embedded analytics — Expo/React Native, Firebase behind
+    a consent gate, full store operations.</p>
+  </div>
+  <div class="card">
+    <h3>Sammie — realtime voice assistant</h3>
+    <p>OpenAI Realtime API voice agent (WebRTC) with a working tool suite — meal planning,
+    story and song creation, health milestones — plus a Postgres durable delivery queue.</p>
+  </div>
+  <div class="card">
+    <h3>Generative media pipelines</h3>
+    <p>Song generator (Flask/Celery → Mureka → art → PDF → S3, in production since 2024),
+    illustrated story generator (Next.js + Flux), and a Twilio SMS assistant with CDC
+    developmental-milestone tools.</p>
+  </div>
+  <div class="card">
+    <h3>RightOff</h3>
+    <p>Native iOS receipt scanner: Swift 6, on-device Vision OCR, Cloudflare Worker key
+    proxy, StoreKit 2 subscriptions, Fastlane → TestFlight.</p>
+  </div>
+</div>
+
+<h2>Background</h2>
+<p style="max-width:64ch">Progressive Insurance's first AI Prompt Engineer — a role created
+after I cold-emailed executive proposals in the weeks following GPT-4's release. Before
+that: a decade in audio engineering and production (Full Sail, Nashville). Since 2024:
+Elevated Consultants LLC, building the products above and funding the research program
+independently.</p>
+
+<footer>
+  <p>jeffrey.w.shorthill@gmail.com · <a href="https://github.com/jeffreywilliamportfolio">github.com/jeffreywilliamportfolio</a>
+  · All research artifacts public: raw data, frozen specs, checksums.</p>
+</footer>
+</main>
+</body>
+</html>
