@@ -84,6 +84,8 @@
     line-height:1.5;min-width:0}
   #statetext b{color:var(--stage-ink);font-weight:500}
   #statetext .dots::after{content:"";animation:dots 1.4s steps(4) infinite}
+  #statecite{flex:0 1 auto;margin-left:auto;font-family:var(--mono);font-size:11.5px;color:rgba(154,167,184,.6);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:38%;padding-left:14px}
   .scan{position:absolute;left:0;right:0;top:0;height:3px;border-radius:2px;z-index:2;
         background:linear-gradient(90deg,transparent,var(--amber),transparent);
         animation:scan 1.7s linear infinite;opacity:.9}
@@ -274,7 +276,7 @@
         <span class="line" id="a1line">On it. Give me a second to look back through your work.</span>
       </div>
     </div>
-    <div id="statebox"><div id="staterow"><span id="stateicon"></span><span id="statetext"></span></div></div>
+    <div id="statebox"><div id="staterow"><span id="stateicon"></span><span id="statetext"></span><span id="statecite"></span></div></div>
     <div class="cue ai" id="cue-a2">
       <span class="who">ASSISTANT</span>
       <span class="line">Jeffrey, I&rsquo;d be happy to put together a portfolio.</span>
@@ -395,14 +397,14 @@ const STOREPAGES={
 
 /* thinking states: one skinny status box, titles + icons only */
 const STATES=[
- {icon:"doc",  text:'Reading <b>Self-Copy Regime</b>, the August 2026 MoE routing preprint<span class="dots"></span>'},
- {icon:"doc",  text:'Reading <b>Banana in, Bostrom out</b> on LessWrong<span class="dots"></span>'},
- {icon:"doc",  text:'Reading <b>Survival of the Fitted</b>, the Jacobian lens transfer paper<span class="dots"></span>'},
- {icon:"gift", text:'Reviewing <b>Gift Connect Parenting Suite</b> on the App Store and Google Play<span class="dots"></span>'},
- {icon:"cube", text:'Opening <b>MindVolume</b> and watching it think<span class="dots"></span>'},
+ {icon:"doc",  cite:"zenodo.org/records/21892999", text:'Reading <b>Self-Copy Regime</b>, the August 2026 MoE routing preprint<span class="dots"></span>'},
+ {icon:"doc",  cite:"lesswrong.com/posts/Eft6ehAcvR8MxFbsR", text:'Reading <b>Banana in, Bostrom out</b> on LessWrong<span class="dots"></span>'},
+ {icon:"doc",  cite:"zenodo.org", text:'Reading <b>Survival of the Fitted</b>, the Jacobian lens transfer paper<span class="dots"></span>'},
+ {icon:"gift", cite:"apps.apple.com · play.google.com", text:'Reviewing <b>Gift Connect Parenting Suite</b> on the App Store and Google Play<span class="dots"></span>'},
+ {icon:"cube", cite:"github.com/jeffreywilliamportfolio", text:'Opening <b>MindVolume</b> and watching it think<span class="dots"></span>'},
  {icon:"spark",text:'Putting the desk together<span class="dots"></span>'}
 ];
-const STATE_DUR=4.0, LAST_DUR=2.4;
+const STATE_DUR=3.3, LAST_DUR=2.0;
 
 /* ---------------- sound ---------------- */
 function sfx(key,vol){ try{ const a=new Audio(ASSETS[key]); a.volume=vol; a.play().catch(()=>{});}catch(e){} }
@@ -419,6 +421,7 @@ function typeInto(el,text,cps,done){
 function setState(i){
   $("stateicon").innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="'+HI[STATES[i].icon]+'"/></svg>';
   $("statetext").innerHTML=STATES[i].text;
+  $("statecite").textContent=STATES[i].cite||"";
 }
 function runScene(){
   $("au1").src=ASSETS.line1; $("au2").src=ASSETS.line2;
