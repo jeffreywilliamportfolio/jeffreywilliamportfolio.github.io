@@ -1,219 +1,218 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jeffrey William Shorthill — AI Interpretability & Systems</title>
-<meta name="description" content="Independent AI interpretability and evaluation researcher. Ships production AI systems end to end. Seven published preprints on MoE routing, evaluation contamination, and safety behavior.">
-<style>
-  :root{
-    --bg:#faf9f7; --ink:#1a1a1e; --muted:#5c5c66; --line:#e4e2dd;
-    --card:#ffffff; --accent:#8a4f2d; --accent2:#2d5a8a; --chip:#f0ede8;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{ --bg:#131316; --ink:#e8e6e1; --muted:#9a98a0; --line:#2a2a30;
-           --card:#1c1c21; --accent:#d29a6b; --accent2:#7aa7d4; --chip:#26262c; }
-  }
-  *{box-sizing:border-box; margin:0}
-  body{background:var(--bg); color:var(--ink);
-       font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-       padding:0 20px}
-  main{max-width:880px; margin:0 auto; padding:56px 0 80px}
-  a{color:var(--accent2); text-decoration:none}
-  a:hover{text-decoration:underline}
-  header h1{font-size:2rem; letter-spacing:-.02em}
-  .tag{color:var(--muted); margin:6px 0 14px; font-size:1.05rem}
-  .links{display:flex; flex-wrap:wrap; gap:10px 18px; font-size:.95rem}
-  .pitch{margin:30px 0 8px; font-size:1.06rem; max-width:64ch}
-  .pitch b{color:var(--accent)}
-  h2{margin:44px 0 6px; font-size:1.15rem; text-transform:uppercase;
-     letter-spacing:.08em; color:var(--accent)}
-  h2 + p.sub{color:var(--muted); font-size:.93rem; margin-bottom:14px}
-  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px}
-  .card{background:var(--card); border:1px solid var(--line); border-radius:10px;
-        padding:16px 18px}
-  .card h3{font-size:1rem; margin-bottom:6px}
-  .card p{font-size:.92rem; color:var(--muted)}
-  .card .doi{display:block; margin-top:10px; font-size:.82rem}
-  .status{margin-top:8px; font-size:.78rem; letter-spacing:.02em; color:var(--accent);
-          text-transform:uppercase}
-  ul.flat{list-style:none; display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
-  ul.flat li{background:var(--chip); border-radius:999px; padding:3px 12px;
-             font-size:.82rem; color:var(--muted)}
-  .method{border-left:3px solid var(--accent); padding:4px 0 4px 16px; margin:12px 0;
-          font-size:.95rem}
-  .method b{display:block}
-  .method span{color:var(--muted); font-size:.9rem}
-  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line);
-         color:var(--muted); font-size:.9rem}
-  @media (max-width:600px){ header h1{font-size:1.6rem} }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f0eb">
+  <meta name="description" content="Jacobian Jeffrey is a live observer lens into the work and mind of Jeffrey William Shorthill.">
+  <meta property="og:title" content="Jacobian Jeffrey">
+  <meta property="og:description" content="Enter the session. Open the tools. Follow the evidence.">
+  <title>Jacobian Jeffrey</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23141517'/%3E%3Cpath d='M18 17h10v21c0 7-4 11-11 11h-3v-8h2c2 0 3-1 3-4V17Zm15 0h15v8h-6v24h-9V17Z' fill='%23f4f1e9'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<main>
-<header>
-  <h1>Jeffrey William Shorthill</h1>
-  <p class="tag">AI interpretability &amp; evaluation research · production AI systems, end to end · Salt Lake City, UT</p>
-  <nav class="links">
-    <a href="https://github.com/jeffreywilliamportfolio">GitHub</a>
-    <a href="mailto:jeffrey.w.shorthill@gmail.com">Email</a>
-    <a href="resume_research.pdf">Resume (research)</a>
-    <a href="resume_product.pdf">Resume (product)</a>
-    <a href="https://gift-connect.org/our-work/technology-tools/">Gift Connect tools</a>
-  </nav>
-</header>
+<body data-state="opening">
+  <a class="skip-link" href="#conversation">Skip to conversation</a>
 
-<p class="pitch">
-I do two things that rarely live in one person: I <b>run an independent, publicly
-published AI-interpretability research program</b> — preregistered protocols, reported
-nulls, my own claims retired when the data turned — and I <b>ship complete consumer AI
-products solo</b>, from React Native storefronts to realtime voice agents to the GPU
-capture harnesses underneath. I build the evaluation, and I build the thing being evaluated.
-</p>
+  <div class="app-shell" id="app-shell">
+    <aside class="sidebar" aria-label="Chat history">
+      <button class="new-chat" id="new-chat" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16.5 3.5a2.12 2.12 0 0 1 3 3L12 14l-4 1 1-4 7.5-7.5Z"/></svg>
+        <span>New chat</span>
+      </button>
+      <div class="session-mark" id="session-mark" aria-hidden="true"><i></i><b>JJ</b><span>inside<br>session</span></div>
+    </aside>
 
-<h2>The paper of record</h2>
-<p class="sub">Built at full standard: rules frozen before capture, fail-closed audits, replication before claims.</p>
-<div class="grid">
-  <div class="card">
-    <h3>In-Context Availability Reorganizes MoE Expert Routing</h3>
-    <p>Cross-generation study (Qwen3.5 + 3.6): when a model's output already sits verbatim
-    in context, layer-14 routing reorganizes under rules frozen before capture. The attention
-    carrier is located and severed; the coalition replicates across a model generation under
-    frozen predictions; intervention nulls bound the claim. Direct implication: multi-turn
-    evaluations partly measure <em>availability</em>, not capability.</p>
-    <span class="status">Confirmatory · preregistered · replicated</span>
-    <a class="doi" href="https://doi.org/10.5281/zenodo.21892999">DOI 10.5281/zenodo.21892999</a>
-  </div>
-</div>
+    <main class="chat" id="chat">
+      <header class="chat-bar">
+        <div class="model-name"><b>Jacobian Jeffrey</b><span id="session-status">a live session</span></div>
+        <button class="restart-button" id="restart-button" type="button" hidden>Restart</button>
+      </header>
 
-<h2>The correction record</h2>
-<p class="sub">Early results of this program were flawed. These are the public receipts of finding and fixing them — the part that makes the rest trustworthy.</p>
-<div class="grid">
-  <div class="card">
-    <h3>When Routing Entropy Tracks Length, Not Complexity</h3>
-    <p>A self-refutation: my own earlier reading of routing entropy fell to a token-position
-    confound, so I published the correction. Measured at the right position, the "complexity
-    gradient" reverses. DeepSeek V3.1 + Qwen3.5-397B, R1 replication.</p>
-    <span class="status">Published correction of my own result</span>
-    <a class="doi" href="https://doi.org/10.5281/zenodo.20779602">DOI 10.5281/zenodo.20779602</a>
-  </div>
-  <div class="card">
-    <h3>Register-Readout Artifact Bundle (e114)</h3>
-    <p>Preregistered sweeps that <em>retired my own earlier claims</em> — a specificity
-    overclaim, a lead–lag ordering that reversed under onset alignment, alternative readings
-    adjudicated away — with raw router archives and SHA-256 manifests, all public and versioned.</p>
-    <span class="status">Claims formally retired · receipts public</span>
-    <a class="doi" href="https://doi.org/10.5281/zenodo.20709736">DOI 10.5281/zenodo.20709736</a>
-  </div>
-</div>
+      <section class="conversation" id="conversation" aria-label="Conversation" aria-live="polite">
+        <div class="opening-space" id="opening-space" aria-hidden="true">
+          <div class="opening-coordinate"><span>SESSION / 001</span><i></i><b>waiting for your first move</b></div>
+        </div>
 
-<h2>Exploratory results</h2>
-<p class="sub">Fast, small-n, honestly labeled — findings awaiting the full frozen-protocol treatment. Read them as leads, not conclusions.</p>
-<div class="grid">
-  <div class="card">
-    <h3>The Generation Half</h3>
-    <p>Expert specialization is invisible in prefill and emerges during generation —
-    one generalist wins 18/20 domains at prefill; twenty distinct per-domain experts win
-    during generation. Length-matched control; replicates at 122B.</p>
-    <span class="status">Exploratory · needs independent replication</span>
-    <a class="doi" href="https://doi.org/10.5281/zenodo.20779604">DOI 10.5281/zenodo.20779604</a>
-  </div>
-  <div class="card">
-    <h3>No Single Safety Gate</h3>
-    <p>Harm-refusal routing in Qwen3.5-35B looks distributed: suppressing the lead expert
-    collapses its routed mass yet yields zero harmful completions — routing reallocates.</p>
-    <span class="status">Exploratory · n=6/12 · self-labeled as such</span>
-    <a class="doi" href="https://doi.org/10.5281/zenodo.20786891">DOI 10.5281/zenodo.20786891</a>
-  </div>
-  <div class="card">
-    <h3>Dialect-Marked Response Audit</h3>
-    <p>Matched-pair safety-support equivalence across AAVE-marked vs. AE prompt surfaces.
-    Shipped only after an adversarial claim audit sorted every claim into held, narrowed,
-    or withdrawn — what's public is the survivor set.</p>
-    <span class="status">Post-audit narrowed claims · deterministic protocol</span>
-    <a class="doi" href="https://doi.org/10.5281/zenodo.20449546">DOI 10.5281/zenodo.20449546</a>
-  </div>
-</div>
+        <article class="message user-message" id="user-message" aria-hidden="true" hidden>
+          <div class="avatar user-avatar">JS</div>
+          <div class="message-copy"><p id="user-message-text"></p></div>
+        </article>
 
-<h2>Instruments</h2>
-<p class="sub">Tools I built because the questions needed them.</p>
-<div class="grid">
-  <div class="card">
-    <h3>Jacobian lens-chat</h3>
-    <p>A chat interface that pipes a model's own residual-stream lens readout back to it in
-    real time — sham-controlled introspection experiments on an instrumented model, with
-    per-span J-state timelines and prefill capture.</p>
-  </div>
-  <div class="card">
-    <h3>MindVolume</h3>
-    <p>Native macOS (SwiftUI + Metal) app rendering Jacobian-lens captures of a 27B model as
-    an explorable 3D particle field — fly through what the model is disposed to say.</p>
-    <a class="doi" href="https://github.com/jeffreywilliamportfolio/MindVolume">github.com/jeffreywilliamportfolio/MindVolume</a>
-  </div>
-  <div class="card">
-    <h3>Capture harnesses</h3>
-    <p>Custom llama.cpp router-logit capture binaries and HF-hook pipelines: dense per-token
-    routing at all layers, teacher-forced position-matched designs, cross-runtime validation
-    against an independent stack.</p>
-  </div>
-</div>
+        <article class="message assistant-message reasoning-message" id="reasoning-message" aria-hidden="true" hidden>
+          <div class="avatar assistant-avatar">J</div>
+          <div class="message-copy">
+            <div class="reasoning-heading">
+              <span class="thinking-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+              <div><b>Reasoning summary</b><small id="reasoning-status">understanding the request</small></div>
+            </div>
+            <p id="reasoning-copy" class="reasoning-copy"></p>
+            <div class="tool-bench" id="tool-bench" aria-label="Available tools" hidden>
+              <button class="tool-chip is-deferred" type="button" disabled><span>web_search</span><small>later</small></button>
+              <button class="tool-chip primary-tool" id="document-tool" type="button" disabled aria-describedby="tool-instruction" aria-controls="tool-space" aria-expanded="false">
+                <span>document_reader</span><small id="document-tool-state">checking…</small><i>↗</i>
+              </button>
+              <button class="tool-chip" type="button" disabled><span>jacobian_lens</span><small>available</small></button>
+              <button class="tool-chip" type="button" disabled><span>memory_recall</span><small>available</small></button>
+            </div>
+            <p class="tool-instruction" id="tool-instruction" hidden>Open the tool space to continue the reasoning.</p>
+          </div>
+        </article>
 
-<h2>Methodology</h2>
-<p class="sub">The part I'd want to be hired for.</p>
-<div class="method"><b>Preregistration under version control</b>
-  <span>Analysis rules hash-frozen before capture; append-only deviation logs; pass/fail
-  declared in advance and honored — including publishing the failures.</span></div>
-<div class="method"><b>Adversarial self-review</b>
-  <span>My headline confound was found by me, attacking my own result, and published as a
-  standalone correction before anyone else could need to.</span></div>
-<div class="method"><b>Blinding that binds</b>
-  <span>A fully blinded gravitational-wave echo search whose preregistered positive control
-  failed — so the pipeline refused to unblind the result, and the sealed answer file's
-  absence is reported as the finding.</span></div>
-<ul class="flat">
-  <li>bootstrap inference</li><li>frozen prompt banks</li><li>sham controls</li>
-  <li>cross-runtime validation</li><li>token-identical interventions</li>
-  <li>public raw data + SHA-256 manifests</li>
-</ul>
+        <article class="message assistant-message final-message" id="final-message" aria-hidden="true" hidden>
+          <div class="avatar assistant-avatar">J</div>
+          <div class="message-copy">
+            <p id="assistant-response"></p><span class="stream-caret" id="stream-caret" aria-hidden="true"></span>
+            <div class="synthesis-foot" id="synthesis-foot" hidden>
+              <i></i><span>The archive remains live around this answer.</span>
+            </div>
+          </div>
+        </article>
+      </section>
 
-<h2>Shipped products</h2>
-<p class="sub">Sole engineer, design to store operations — for Gift Connect (nonprofit early-childhood program) and independently.</p>
-<div class="grid">
-  <div class="card">
-    <h3>Gift Connect Parenting Suite</h3>
-    <p>Consumer mobile app live on the App Store and Google Play: daily-habit curriculum,
-    journal, tips with push actions, embedded analytics — Expo/React Native, Firebase behind
-    a consent gate, full store operations.</p>
+      <div class="composer-wrap" id="composer-wrap">
+        <form class="composer" id="composer">
+          <label class="sr-only" for="prompt-input">Message Jacobian Jeffrey</label>
+          <textarea id="prompt-input" rows="4" spellcheck="true">Hey Chat! My name is Jeffrey William Shorthill. I’m pivoting from nonprofit developer to full-time AI researcher. I’ve been independent thus far. I’d like your assistance putting together an up-to-date portfolio for AI interpretability positions. Let’s review my recent work. Thank you.</textarea>
+          <button class="send-button" id="send-button" type="submit" aria-label="Send this message">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 7-7 7 7M12 5v14"/></svg>
+          </button>
+        </form>
+        <p class="composer-note"><i></i><span>This is your session. Send Jeffrey’s request to begin.</span></p>
+      </div>
+    </main>
   </div>
-  <div class="card">
-    <h3>Sammie — realtime voice assistant</h3>
-    <p>OpenAI Realtime API voice agent (WebRTC) with a working tool suite — meal planning,
-    story and song creation, health milestones — plus a Postgres durable delivery queue.</p>
-  </div>
-  <div class="card">
-    <h3>Generative media pipelines</h3>
-    <p>Song generator (Flask/Celery → Mureka → art → PDF → S3, in production since 2024),
-    illustrated story generator (Next.js + Flux), and a Twilio SMS assistant with CDC
-    developmental-milestone tools.</p>
-  </div>
-  <div class="card">
-    <h3>RightOff</h3>
-    <p>Native iOS receipt scanner: Swift 6, on-device Vision OCR, Cloudflare Worker key
-    proxy, StoreKit 2 subscriptions, Fastlane → TestFlight.</p>
-  </div>
-</div>
 
-<h2>Background</h2>
-<p style="max-width:64ch">Progressive Insurance's first AI Prompt Engineer — a role created
-after I cold-emailed executive proposals in the weeks following GPT-4's release. Before
-that: a decade in audio engineering and production (Full Sail, Nashville). Since 2024:
-Elevated Consultants LLC, building the products above and funding the research program
-independently.</p>
+  <section class="tool-space" id="tool-space" aria-label="Document reader tool space" aria-hidden="true" inert>
+    <svg class="field-lines" viewBox="0 0 1600 1000" preserveAspectRatio="none" aria-hidden="true">
+      <path class="field-thread thread-a" d="M130 760 C330 650 410 740 560 575 S850 260 1100 330 1320 600 1540 430"></path>
+      <path class="field-thread thread-b" d="M420 85 C650 170 620 340 780 440 S1070 540 1230 790"></path>
+    </svg>
 
-<footer>
-  <p>jeffrey.w.shorthill@gmail.com · <a href="https://github.com/jeffreywilliamportfolio">github.com/jeffreywilliamportfolio</a>
-  · All research artifacts public: raw data, frozen specs, checksums.</p>
-</footer>
-</main>
+    <header class="field-header">
+      <div class="field-title"><i></i><span>document_reader</span><b>Jeffrey / working set</b></div>
+      <div class="field-progress"><span id="visited-count">0 of 3 regions opened</span><i><b id="progress-fill"></b></i></div>
+      <button class="collapse-tool" id="collapse-tool" type="button"><span>Return to full thread</span><i>↙</i></button>
+    </header>
+
+    <div class="evidence-field" id="evidence-field" aria-label="Jeffrey’s evidence field">
+      <p class="field-coordinate c1" aria-hidden="true">OBSERVATION / CORRECTION</p>
+      <p class="field-coordinate c2" aria-hidden="true">INSTRUMENT / INTERFACE</p>
+      <p class="field-coordinate c3" aria-hidden="true">SYSTEM / HUMAN USE</p>
+
+      <button class="artifact artifact-confound" data-artifact="confound" data-region="research" type="button" aria-label="Inspect the position-confound figure" aria-hidden="true" tabindex="-1">
+        <span class="image-plane">
+          <img class="artifact-base" src="assets/position-confound.png" alt="Routing entropy by prompt complexity for DeepSeek V3.1 and Qwen 397B">
+          <img class="artifact-focus" src="assets/position-confound.png" alt="">
+        </span>
+        <span class="artifact-caption"><b>A beautiful result breaks</b><small>all-token rise · final-token reversal</small><i>03 / 05</i></span>
+      </button>
+
+      <button class="artifact artifact-mindvolume" data-artifact="mindvolume" data-region="recent" type="button" aria-label="Inspect MindVolume" aria-hidden="true" tabindex="-1">
+        <span class="image-plane">
+          <img class="artifact-base" src="assets/mindvolume-field.webp" alt="MindVolume vocabulary-space field">
+          <img class="artifact-focus" src="assets/mindvolume-field.webp" alt="">
+        </span>
+        <span class="artifact-caption"><b>The table runs out of dimensions</b><small>so the missing view gets built</small><i>07 / 24</i></span>
+      </button>
+
+      <button class="artifact artifact-community" data-artifact="community" data-region="career" type="button" aria-label="Inspect Gift Connect’s community origin" aria-hidden="true" tabindex="-1">
+        <span class="image-plane">
+          <img class="artifact-base" src="assets/community-field.webp" alt="Gift Connect community gathering">
+          <img class="artifact-focus" src="assets/community-field.webp" alt="">
+        </span>
+        <span class="artifact-caption"><b>Technology begins with people</b><small>nonprofit fieldwork · Zambia</small><i>origin</i></span>
+      </button>
+
+      <button class="artifact artifact-gift" data-artifact="gift" data-region="career" type="button" aria-label="Inspect Gift Connect product imagery" aria-hidden="true" tabindex="-1">
+        <span class="image-plane">
+          <img class="artifact-base" src="assets/gift-play.webp" alt="A parent and child playing together">
+          <img class="artifact-focus" src="assets/gift-play.webp" alt="">
+        </span>
+        <span class="artifact-caption"><b>Research becomes a family tool</b><small>mobile · voice · generation · care</small><i>25 / 26</i></span>
+      </button>
+
+      <button class="artifact artifact-brilliance" data-artifact="brilliance" data-region="career" type="button" aria-label="Inspect the Brilliance research system" aria-hidden="true" tabindex="-1">
+        <span class="image-plane">
+          <img class="artifact-base" src="assets/brilliance-pipeline.png" alt="Brilliance multi-agent research pipeline">
+          <img class="artifact-focus" src="assets/brilliance-pipeline.png" alt="">
+        </span>
+        <span class="artifact-caption"><b>Questions become systems</b><small>agents · queues · research orchestration</small><i>2024</i></span>
+      </button>
+    </div>
+
+    <aside class="live-reasoning" id="live-reasoning" aria-live="polite">
+      <div><span class="thinking-mark"><i></i><i></i><i></i></span><b>Reasoning remains live</b></div>
+      <p id="field-thought">The archive has structure. Choose where I should look first.</p>
+    </aside>
+
+    <section class="finder" id="finder" aria-label="Jeffrey’s working set">
+      <header class="finder-bar" id="finder-drag-handle">
+        <span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="finder-title"><b>Jeffrey — Working Set</b><small>Local · evidence only</small></div>
+        <div class="finder-tools" aria-hidden="true"><i></i><i></i><i></i><span>⌕</span></div>
+      </header>
+
+      <div class="finder-body">
+        <nav class="finder-sidebar" aria-label="Finder locations">
+          <p>Favorites</p>
+          <button type="button" class="sidebar-location is-active"><i class="drive-mini"></i><span>My Drive</span></button>
+          <button type="button" class="sidebar-location"><i class="clock-mini"></i><span>Recents</span></button>
+          <p>Context</p>
+          <button type="button" class="sidebar-location"><i class="tag-mini"></i><span>Starred</span></button>
+          <div class="storage"><span>working set</span><i><b></b></i><small>15 source groups</small></div>
+        </nav>
+
+        <div class="browser-column region-column" aria-label="Portfolio regions">
+          <div class="column-label"><span>My Drive</span><small>3 folders</small></div>
+          <button class="region-button" data-region="research" type="button">
+            <span class="folder-icon"></span><div><b>Research Highlights</b><small>papers · datasets · corrections</small></div><em>5</em><i>›</i>
+          </button>
+          <button class="region-button" data-region="recent" type="button">
+            <span class="folder-icon"></span><div><b>Recent Work</b><small>instruments · probes · drafts</small></div><em>7</em><i>›</i>
+          </button>
+          <button class="region-button" data-region="career" type="button">
+            <span class="folder-icon"></span><div><b>Career Showcase</b><small>systems built for people</small></div><em>3</em><i>›</i>
+          </button>
+          <div class="resume-file"><span>PDF</span><div><b>resume_research.pdf</b><small>supporting record · not the experience</small></div></div>
+        </div>
+
+        <div class="browser-column files-column" id="files-column" aria-label="Files">
+          <div class="column-label"><span id="files-heading">Select a region</span><small id="files-count">—</small></div>
+          <div class="file-list" id="file-list">
+            <div class="file-placeholder"><i></i><p>The file space will form around the region you open.</p></div>
+          </div>
+        </div>
+
+        <aside class="finder-inspector" id="finder-inspector" aria-label="Selection details">
+          <div class="inspector-visual" id="inspector-visual"><i></i><i></i><i></i></div>
+          <p id="inspector-kicker">LIVE INSPECTOR</p>
+          <h2 id="inspector-title">Nothing selected yet.</h2>
+          <p id="inspector-copy">Open a region. The surrounding field will expose what belongs to it.</p>
+          <dl id="inspector-facts"><div><dt>mode</dt><dd>visitor-led</dd></div><div><dt>state</dt><dd>waiting</dd></div></dl>
+        </aside>
+      </div>
+
+      <footer class="finder-status"><span id="finder-status">3 folders · 1 résumé</span><i></i><b>local source</b></footer>
+    </section>
+
+    <button class="synthesize-button" id="synthesize-button" type="button" hidden>
+      <span>Enough fragments are open.</span><b>Synthesize what they mean</b><i>→</i>
+    </button>
+
+    <div class="observer-lens" id="observer-lens" aria-hidden="true"><i></i><span>observe</span></div>
+  </section>
+
+  <dialog class="artifact-dialog" id="artifact-dialog" aria-labelledby="artifact-dialog-title">
+    <button type="button" class="dialog-close" id="dialog-close">Close <i>×</i></button>
+    <div class="dialog-image" id="dialog-image"></div>
+    <div class="dialog-copy"><p id="artifact-dialog-kicker"></p><h2 id="artifact-dialog-title"></h2><p id="artifact-dialog-copy"></p><small id="artifact-dialog-source"></small></div>
+  </dialog>
+
+  <div class="sr-only" id="announcer" aria-live="assertive"></div>
+
+  <script src="assets/gsap.min.js"></script>
+  <script src="assets/Draggable.min.js"></script>
+  <script src="experience.js"></script>
 </body>
 </html>

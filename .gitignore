@@ -1,0 +1,5 @@
+output/
+.playwright-cli/
+*.pdf
+node_modules/
+.DS_Store
