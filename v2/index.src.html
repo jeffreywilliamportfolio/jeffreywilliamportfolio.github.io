@@ -369,6 +369,12 @@ const PROJECTS=[
         ["#2fa36b","Cohort Dashboard","Program cohort tracking for facilitators","36 commits"],
         ["#c04a4a","GA4 Dashboard","Live analytics grid for the ecosystem","32 commits"]],
   note:"six deployed tools, one mission, one engineer."},
+ {id:"resume", label:"Resume", kind:"doc", thumb:"resume_p00",
+  title:"Jeffrey W. Shorthill — Resume",
+  blurb:"Research-focused one-pager. Independent interpretability work, shipped products, and the methods record.",
+  resumelink:true,
+  pages:seq("resume_p",1),
+  note:"the research variant. product version on request."},
  {id:"about", label:"README", kind:"about", title:"About Jeffrey",
   note:"the pattern to notice: every result ships with the test that could kill it."}
 ];
@@ -538,7 +544,8 @@ function openWin(p,fromEl){
     body='<div class="docmeta"><h2>'+p.title+'</h2><p>'+p.blurb+'</p>'+
       (p.doi?'<div class="doi">DOI&ensp;<a href="https://doi.org/'+p.doi+'" target="_blank" rel="noopener">'+p.doi+'</a></div>':"")+
       (p.lw?'<div class="doi">post&ensp;<a href="'+p.lw+'" target="_blank" rel="noopener">read on LessWrong</a></div>':"")+
-      (p.repo?'<div class="doi">repo&ensp;<a href="https://'+p.repo+'" target="_blank" rel="noopener">'+p.repo+'</a></div>':"")+'</div>'+
+      (p.repo?'<div class="doi">repo&ensp;<a href="https://'+p.repo+'" target="_blank" rel="noopener">'+p.repo+'</a></div>':"")+
+      (p.resumelink?'<div class="doi">pdf&ensp;<a href="resume.pdf" target="_blank" rel="noopener">download resume.pdf</a></div>':"")+'</div>'+
       '<div class="pages">'+p.pages.map(u=>'<img loading="lazy" src="'+u+'" alt="page">').join("")+'</div>'+
       (p.demo?'<figure class="demo"><img src="'+ASSETS[p.demo.img]+'" alt="demo recording"><figcaption>'+p.demo.cap+'</figcaption></figure>':"");
   }else if(p.kind==="app"){
