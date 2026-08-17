@@ -1,0 +1,647 @@
+<meta charset="utf-8">
+<title>Jeffrey Shorthill</title>
+<style>
+  :root{
+    --stage:#0d1117; --stage-ink:#e8ecf2; --stage-dim:#9aa7b8;
+    --accent:#64d2ff; --amber:#ffb454;
+    --paper:#f5f4f0; --paper-ink:#26282c; --paper-dim:#6b6f76;
+    --wall1:#141c33; --wall2:#1d3a44; --wall3:#0f1526;
+    --chrome:rgba(28,30,38,.72); --chrome-ink:#f0f2f6;
+    --win:#f5f4f0; --win-edge:rgba(0,0,0,.35);
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sys:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--stage);color:var(--stage-ink);font-family:var(--sys);overflow:hidden;
+       -webkit-font-smoothing:antialiased}
+  button{font-family:inherit;cursor:pointer;color:inherit}
+  svg{display:block}
+
+  /* ---------- ACT 1 ---------- */
+  #stage{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+         background:radial-gradient(120% 90% at 50% 110%, #16202e 0%, var(--stage) 55%);z-index:40}
+  #gate{text-align:center;display:flex;flex-direction:column;align-items:center;gap:30px}
+  #gate .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--stage-dim);
+                 text-transform:uppercase}
+  #gate h1{font-size:clamp(34px,6vw,64px);font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+  #gate p{color:var(--stage-dim);font-size:15.5px;max-width:38ch;line-height:1.55}
+  #gate{display:flex;flex-direction:column;align-items:center;gap:18px}
+  #gate p{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--stage-dim);text-transform:uppercase}
+  #playwrap{position:relative;width:84px;height:84px}
+  #playring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(100,210,255,.4);
+            animation:pulse 2.4s ease-out infinite}
+  @keyframes pulse{0%{transform:scale(1);opacity:.8}70%{transform:scale(1.55);opacity:0}100%{opacity:0}}
+  #playbtn{position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(232,236,242,.3);
+           background:rgba(100,210,255,.07);display:flex;align-items:center;justify-content:center;
+           transition:border-color .25s, background .25s, transform .2s}
+  #playbtn svg{width:30px;height:30px;margin-left:4px;fill:var(--stage-ink)}
+  #playbtn:hover,#playbtn:focus-visible{border-color:var(--accent);background:rgba(100,210,255,.16);
+           transform:scale(1.05);outline:none}
+  #skipbtn{position:fixed;top:18px;right:22px;z-index:70;background:none;border:none;color:var(--stage-dim);
+           font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;padding:8px 10px;display:none}
+  #skipbtn:hover,#skipbtn:focus-visible{color:var(--stage-ink);outline:none}
+  #soundchip{position:fixed;top:18px;left:22px;z-index:70;font-family:var(--mono);font-size:12px;
+             color:var(--stage-dim);border:1px solid rgba(232,236,242,.2);border-radius:999px;
+             padding:7px 13px;pointer-events:none}
+
+  #script{display:none;width:min(860px,92vw);font-family:var(--mono);font-size:17.5px;line-height:1.8}
+  .cue.big{font-size:clamp(30px,4.2vw,48px);line-height:1.5;margin-bottom:40px}
+  .slot .cue{font-size:clamp(21px,2.6vw,30px);line-height:1.65}
+  .slot{display:grid;margin-bottom:24px}
+  .slot>.cue{grid-area:1/1;margin-bottom:0}
+  #thinkrow{display:inline-flex;align-items:center;gap:10px;color:var(--stage-dim)}
+  #thinkrow .spark{color:var(--accent);display:inline-block}
+  .tdots{display:inline-flex;gap:5px}
+  .tdots i{width:7px;height:7px;border-radius:50%;background:var(--stage-dim);display:block}
+  .cue{margin-bottom:24px;opacity:0}
+  .cue .who{font-size:13px;letter-spacing:.22em;color:var(--stage-dim);display:block;margin-bottom:6px}
+  .cue.ai .who{color:var(--accent)}
+  .cue .line{white-space:pre-wrap}
+  .caret{display:inline-block;width:9px;height:1.15em;vertical-align:text-bottom;background:var(--stage-ink);
+         animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  #montage{display:none;position:fixed;inset:0;z-index:55;background:#0a0e14}
+  .mcard{position:absolute;inset:0;overflow:hidden;background:#0a0e14;opacity:0}
+  .mcard img.mimg{width:100%;height:calc(100% - 60px);object-fit:contain;object-position:center;display:block;background:#0a0e14}
+  .mcard .mlabel{height:60px;display:flex;align-items:center;justify-content:center;gap:14px;padding:0 16px;
+                 font-family:var(--mono);font-size:16.5px;color:var(--stage-dim);background:#0d1117;
+                 border-top:1px solid rgba(232,236,242,.08)}
+  .mcard .mlabel b{color:var(--stage-ink);font-weight:500}
+  .mcard .mprog{color:var(--amber);font-size:13px;letter-spacing:.06em}
+  #mgrid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);
+         grid-template-rows:1fr 1fr;gap:16px;padding:6vh 5vw}
+  .mbox{border-radius:12px;overflow:hidden;background:#131a24;border:1px solid rgba(232,236,242,.12);
+        box-shadow:0 18px 50px rgba(0,0,0,.5);display:flex;flex-direction:column;opacity:0;position:relative}
+  .mbox.focus-ring{border-color:var(--amber);box-shadow:0 0 0 2px rgba(255,180,84,.5),0 18px 50px rgba(0,0,0,.5)}
+  .mhead{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0d1117;
+         font-family:var(--mono);font-size:12.5px;color:var(--stage-dim);border-bottom:1px solid rgba(232,236,242,.08)}
+  .mhead .dots3{display:flex;gap:5px}
+  .mhead .dots3 i{width:8px;height:8px;border-radius:50%;display:block}
+  .mhead .dots3 i:nth-child(1){background:#ff5f57}.mhead .dots3 i:nth-child(2){background:#febc2e}
+  .mhead .dots3 i:nth-child(3){background:#28c840}
+  .mhead b{color:var(--stage-ink);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mmedia{flex:1;overflow:hidden;background:#0a0e14;position:relative}
+  .mmedia img,.mmedia video{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+  #mlog .mmedia{background:#0d1117;padding:14px 16px;overflow:hidden}
+  #mlog .logline{font-family:var(--mono);font-size:clamp(12px,1.25vw,15.5px);line-height:2.1;
+                 color:var(--stage-dim);opacity:0;display:block}
+  #mlog .logline b{color:var(--amber);font-weight:500}
+  @media (max-width:820px){#mgrid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr);gap:10px;padding:4vh 4vw}}
+  .scan{position:absolute;left:0;right:0;top:0;height:3px;border-radius:2px;z-index:2;
+        background:linear-gradient(90deg,transparent,var(--amber),transparent);
+        animation:scan 1.7s linear infinite;opacity:.9}
+  @keyframes scan{0%{top:2%}100%{top:90%}}
+  #enterwrap{display:none;margin-top:34px;text-align:center}
+  #enterbtn{background:var(--accent);color:#08121c;border:none;border-radius:999px;
+            padding:15px 42px;font-size:16px;font-weight:600;letter-spacing:.02em;
+            box-shadow:0 10px 34px rgba(100,210,255,.35);opacity:0}
+  #enterbtn:hover{filter:brightness(1.08)}
+
+  /* ---------- ACT 2 ---------- */
+  #desktop{position:fixed;inset:0;display:none;overflow:hidden;
+    background:linear-gradient(160deg, var(--wall1) 0%, var(--wall2) 58%, var(--wall3) 100%)}
+  #desktop.on{display:block}
+  .aurora{position:absolute;width:55vw;height:55vw;border-radius:50%;filter:blur(90px);pointer-events:none}
+  #aur1{background:rgba(100,210,255,.14);top:-18vw;right:-10vw}
+  #aur2{background:rgba(255,180,84,.09);bottom:-22vw;left:-12vw}
+  #menubar{position:absolute;top:0;left:0;right:0;height:30px;display:flex;align-items:center;
+           gap:20px;padding:0 16px;background:var(--chrome);color:var(--chrome-ink);
+           backdrop-filter:blur(14px);font-size:13px;z-index:500}
+  #menubar .mb-name{font-weight:700}
+  #menubar .mb-item{opacity:.75}
+  #mb-assist{margin-left:auto;display:flex;align-items:center;gap:6px;background:none;border:none;
+             font-size:13px;color:var(--chrome-ink);opacity:.9;padding:2px 8px;border-radius:5px}
+  #mb-assist:hover{background:rgba(255,255,255,.14)}
+  #mb-assist .spark{color:var(--accent)}
+  #menubar .mb-right{font-variant-numeric:tabular-nums;opacity:.9}
+  #hint{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);z-index:5;
+        color:rgba(240,242,246,.55);font-size:12.5px;letter-spacing:.05em;pointer-events:none;
+        transition:opacity .6s}
+  #icons{position:absolute;top:52px;right:26px;display:grid;grid-template-columns:repeat(2,96px);
+         gap:10px 14px;z-index:10;align-items:start}
+  .icon{width:96px;background:none;border:none;border-radius:8px;padding:8px 4px 6px;text-align:center;color:#fff}
+  .icon:hover,.icon:focus-visible{background:rgba(255,255,255,.10);outline:none}
+  .icon.sel{background:rgba(100,210,255,.22)}
+  .icon .glyph{width:54px;height:54px;margin:0 auto 6px;border-radius:13px;display:flex;
+               align-items:center;justify-content:center}
+  .icon .label{font-size:11.5px;line-height:1.25;min-height:2.6em;display:block;text-shadow:0 1px 3px rgba(0,0,0,.65);word-break:break-word}
+
+  .tile-img{overflow:hidden;background:#0d1117}
+  .tile-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .page-thumb{background:#fff;border:1px solid rgba(0,0,0,.22);border-radius:6px !important;overflow:hidden;
+              box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
+  .page-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+  .tile-folder{background:none !important}
+  .tile-folder svg{width:88%;height:88%;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
+  .frows{background:var(--win)}
+  .frow{display:flex;align-items:baseline;gap:12px;padding:13px 20px;border-bottom:1px solid rgba(0,0,0,.07)}
+  .frow .fdot{flex:0 0 auto;width:10px;height:10px;border-radius:3px;align-self:center}
+  .frow b{font-size:14px;white-space:nowrap}
+  .frow span{font-size:13px;color:var(--paper-dim);flex:1;min-width:24ch}
+  .frow .fchip{flex:0 0 auto;font-family:var(--mono);font-size:11px;color:var(--paper-dim);
+               background:rgba(0,0,0,.06);border-radius:999px;padding:3px 10px}
+  .ffoot{padding:12px 20px;font-size:12px;color:var(--paper-dim);background:var(--win)}
+  .tile-readme{background:linear-gradient(180deg,#3a3f4b,#262a33)}
+  .tile-readme svg{width:52%;height:52%;fill:#e8ecf2}
+
+  #notif{position:absolute;top:40px;right:16px;z-index:600;width:min(340px,90vw);display:none;
+         background:rgba(38,41,50,.86);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.16);
+         border-radius:14px;padding:12px 14px;box-shadow:0 18px 50px rgba(0,0,0,.5);cursor:pointer}
+  #notif .nhead{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+  #notif .nicon{width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,#64d2ff,#3a86c8);
+                display:flex;align-items:center;justify-content:center;color:#08121c;font-size:12px}
+  #notif .ntitle{font-size:12px;font-weight:700;color:#fff;letter-spacing:.02em}
+  #notif .nwhen{margin-left:auto;font-size:11px;color:rgba(255,255,255,.5)}
+  #notif .nbody{font-size:13px;color:rgba(255,255,255,.85);line-height:1.45}
+
+  #dock{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:400;
+        display:flex;align-items:flex-end;gap:10px;padding:9px 14px;border-radius:20px;
+        background:rgba(28,30,38,.55);backdrop-filter:blur(16px);
+        border:1px solid rgba(255,255,255,.14)}
+  .ditem{position:relative;width:46px;height:46px;border:none;background:none;padding:0;
+         transition:transform .18s cubic-bezier(.34,1.4,.64,1);transform-origin:bottom center}
+  .ditem:hover,.ditem:focus-visible{transform:scale(1.42) translateY(-6px);outline:none}
+  .ditem .glyph{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center}
+  .ditem .dlabel{position:absolute;bottom:120%;left:50%;transform:translateX(-50%);white-space:nowrap;
+        background:rgba(20,22,28,.9);color:#fff;font-size:11px;padding:4px 9px;border-radius:6px;
+        opacity:0;pointer-events:none;transition:opacity .15s}
+  .ditem:hover .dlabel{opacity:1}
+
+  .win{position:absolute;width:min(1020px,95vw);max-height:min(86vh,1000px);display:flex;flex-direction:column;
+       background:var(--win);color:var(--paper-ink);border-radius:12px;overflow:hidden;
+       box-shadow:0 30px 90px rgba(0,0,0,.55),0 0 0 1px var(--win-edge);z-index:20}
+  .win.focus{z-index:100}
+  .titlebar{height:40px;flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:0 14px;
+            background:linear-gradient(180deg,#e9e7e2,#dcdad4);cursor:grab;user-select:none;
+            border-bottom:1px solid rgba(0,0,0,.12)}
+  .titlebar:active{cursor:grabbing}
+  .lights{display:flex;gap:8px}
+  .light{width:12px;height:12px;border-radius:50%;border:none;padding:0}
+  .l-close{background:#ff5f57}.l-min{background:#febc2e}.l-max{background:#28c840}
+  .l-max:hover::after{content:"+";display:block;font-size:11px;line-height:12px;color:rgba(0,0,0,.5);text-align:center}
+  .win.maxed{left:8px !important;top:38px !important;width:calc(100vw - 16px);max-height:calc(100vh - 110px)}
+  .l-close:hover::after{content:"×";display:block;font-size:10px;line-height:12px;color:rgba(0,0,0,.55);text-align:center}
+  .titlebar .tname{flex:1;text-align:center;font-size:13px;font-weight:600;color:#4c4f55;
+                   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:44px}
+  .win.browser .titlebar{height:46px;gap:10px}
+  .navbtns{display:flex;gap:2px;color:#8a8d93}
+  .navbtns svg{width:22px;height:22px;padding:3px}
+  .navbtns svg:last-child{opacity:.45}
+  .urlpill{flex:1;min-width:0;display:flex;align-items:center;gap:7px;background:#fff;
+           border:1px solid rgba(0,0,0,.12);border-radius:8px;padding:6px 12px;margin-right:6px;
+           font-size:12.5px;color:#3a3d42;cursor:pointer;overflow:hidden}
+  .urlpill:hover{border-color:#9bbfe0;box-shadow:0 0 0 3px rgba(100,160,220,.15)}
+  .urlpill .lock{flex:0 0 auto;color:#5a5d63;font-size:11px}
+  .urlpill .url{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .urlpill .ext{flex:0 0 auto;margin-left:auto;color:#2a6fa8;font-size:11px}
+  .browserpage{background:#fff}
+  .browserpage img.lwpage{width:100%;display:block}
+  .browserfoot{background:#12161d;padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;align-items:center}
+  .browserfoot .cap{font-family:var(--mono);font-size:11.5px;color:#9aa7b8;align-self:flex-start}
+  .browserfoot img{width:100%;max-width:920px;border-radius:8px}
+  .browserfoot a{color:#64d2ff;font-family:var(--mono);font-size:12px;text-decoration:none}
+  .anote{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:8px 16px;
+         background:#2a2416;border-bottom:1px solid rgba(255,180,84,.25);
+         font-family:var(--mono);font-size:12.5px;color:#ffd9a1}
+  .anote .spark{color:var(--accent)}
+  .winbody{overflow-y:auto;overflow-x:hidden;background:#eceae4}
+  .docmeta{padding:18px 22px 14px;background:var(--win);border-bottom:1px solid rgba(0,0,0,.08)}
+  .docmeta h2{font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:1.35;text-wrap:balance}
+  .docmeta p{margin-top:7px;font-size:13.5px;line-height:1.6;color:var(--paper-dim);max-width:64ch}
+  .docmeta .doi{margin-top:9px;font-family:var(--mono);font-size:11.5px;color:var(--paper-dim)}
+  .docmeta .doi a{color:#2a6fa8;text-decoration:none}
+  .pages{padding:18px;display:flex;flex-direction:column;gap:14px;align-items:center}
+  .pages img{width:100%;max-width:920px;box-shadow:0 3px 16px rgba(0,0,0,.18);border-radius:3px;background:#fff}
+  .shots{padding:18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+  .shots.wide{grid-template-columns:1fr}
+  .shots.wide img{border-radius:10px}
+  .shots img{width:100%;border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,.2)}
+  .prose{padding:20px 24px;background:var(--win)}
+  .prose p{font-size:14px;line-height:1.7;max-width:64ch;margin-bottom:13px}
+  .prose h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-dim);margin:20px 0 8px}
+  .prose ul{margin:0 0 13px 18px}
+  .prose li{font-size:13.5px;line-height:1.65;margin-bottom:5px}
+  .prose .mono{font-family:var(--mono);font-size:12px}
+  .prose a{color:#2a6fa8;text-decoration:none}
+  .storebtns{display:flex;gap:10px;padding:14px 18px;background:var(--win);border-bottom:1px solid rgba(0,0,0,.08)}
+  .storebtns button{display:flex;align-items:center;gap:8px;background:#111;color:#fff;border:none;
+    border-radius:10px;padding:9px 16px;font-size:13px;font-weight:600;letter-spacing:.01em}
+  .storebtns button:hover{background:#000;transform:translateY(-1px)}
+  .storebtns button small{display:block;font-size:9.5px;font-weight:400;opacity:.7;text-align:left}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+         background:rgba(0,0,0,.08);border-block:1px solid rgba(0,0,0,.08)}
+  .facts div{background:var(--win);padding:12px 16px}
+  .facts b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--paper-dim);
+           margin-bottom:3px;font-weight:600}
+  .facts span{font-size:13.5px}
+  .demo{padding:18px;display:flex;flex-direction:column;gap:8px;align-items:center;background:#12161d}
+  .demo img{width:100%;max-width:920px;border-radius:8px}
+  .demo figcaption{font-family:var(--mono);font-size:11.5px;color:#9aa7b8}
+
+  @media (max-width:720px){
+    #icons{grid-template-columns:repeat(2,86px);right:12px}
+    #dock{display:none}
+    #hint{bottom:24px}
+    .win{inset:30px 0 0 0 !important;width:100vw;max-height:none;border-radius:0;transform:none !important}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .scan,.caret,#playring{animation:none}
+    .ditem{transition:none}
+  }
+</style>
+
+<button id="skipbtn" type="button">skip intro →</button>
+
+<div id="stage">
+  <div id="gate">
+    <div id="playwrap">
+      <div id="playring"></div>
+      <button id="playbtn" type="button" aria-label="Play with sound">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"/></svg>
+      </button>
+    </div>
+    <p>sound on</p>
+  </div>
+  <div id="script">
+    <div class="cue big" id="cue-j">
+      <span class="who">JEFFREY</span>
+      <span class="line" id="jline"></span><span class="caret" id="jcaret"></span>
+    </div>
+    <div class="slot">
+      <div class="cue ai" id="cue-think">
+        <span class="who">ASSISTANT</span>
+        <span id="thinkrow"><span class="spark">&#10022;</span>Thinking<span class="tdots"><i></i><i></i><i></i></span></span>
+      </div>
+      <div class="cue ai" id="cue-a1">
+        <span class="who">ASSISTANT</span>
+        <span class="line" id="a1line">On it. Give me a second to look back through your work.</span>
+      </div>
+    </div>
+    <div id="montage"></div>
+    <div class="cue ai" id="cue-a2">
+      <span class="who">ASSISTANT</span>
+      <span class="line">Jeffrey, I&rsquo;d be happy to put together a portfolio.</span>
+    </div>
+    <div id="enterwrap"><button id="enterbtn" type="button">Enter Portfolio</button></div>
+  </div>
+</div>
+
+<div id="desktop">
+  <div class="aurora" id="aur1"></div><div class="aurora" id="aur2"></div>
+  <div id="menubar">
+    <span class="mb-name">Jeffrey Shorthill</span>
+    <span class="mb-item">Research</span><span class="mb-item">Products</span><span class="mb-item">Contact</span>
+    <button id="mb-assist" type="button"><span class="spark">✦</span> Assistant</button>
+    <span class="mb-right" id="clock"></span>
+  </div>
+  <div id="notif" role="button" tabindex="0">
+    <div class="nhead"><span class="nicon">✦</span><span class="ntitle">Assistant</span><span class="nwhen">now</span></div>
+    <div class="nbody">Portfolio ready &mdash; six items on the desk. I opened the fun one for you.</div>
+  </div>
+  <p id="hint">double-click an icon to open it &mdash; windows drag by their title bar</p>
+  <div id="icons"></div>
+  <div id="dock"></div>
+</div>
+
+<audio id="au1" preload="auto"></audio>
+<audio id="au2" preload="auto"></audio>
+
+<script>@@GSAP@@</script>
+<script>
+const ASSETS = @@ASSETS_JSON@@;
+
+const HI = {
+ cmd:'M2.25 6a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V6Zm3.97.97a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06l-2.25 2.25a.75.75 0 0 1-1.06-1.06l1.72-1.72-1.72-1.72a.75.75 0 0 1 0-1.06Zm4.28 4.28a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z'
+};
+function glyph(p){
+  if(p.thumb) return '<span class="glyph page-thumb"><img alt="" src="'+ASSETS[p.thumb]+'"></span>';
+  if(p.img)   return '<span class="glyph tile-img"><img alt="" src="'+ASSETS[p.img]+'"></span>';
+  if(p.kind==="folder") return '<span class="glyph tile-folder"><svg viewBox="0 0 54 44" aria-hidden="true"><path d="M3 8c0-2.8 2.2-5 5-5h13l5 6h20c2.8 0 5 2.2 5 5v22c0 2.8-2.2 5-5 5H8c-2.8 0-5-2.2-5-5V8z" fill="#3f8fd6"/><path d="M3 15h48v21c0 2.8-2.2 5-5 5H8c-2.8 0-5-2.2-5-5V15z" fill="#6db3ee"/></svg></span>';
+  return '<span class="glyph tile-readme"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="'+HI.cmd+'"/></svg></span>';
+}
+
+const seq=(k,n)=>Array.from({length:n},(_,i)=>ASSETS[k+String(i).padStart(2,"0")]);
+const PROJECTS=[
+ {id:"selfcopy", label:"Self-Copy Regime", kind:"doc", thumb:"selfcopy_p00",
+  title:"In-Context Availability Reorganizes MoE Expert Routing: A Cross-Generation Study in Qwen3.5 and Qwen3.6",
+  blurb:"Whether a generated span is composed fresh or literally reused from the model's own context is legible in expert routing: reuse reorganizes expert selection at scale, under a rule frozen before capture, replicating across seeds, registers, and an independent inference stack. Published on Zenodo, CC BY 4.0.",
+  doi:"10.5281/zenodo.21892999", pages:seq("selfcopy_p",10),
+  note:"one claim, three seeds, an independent rig. it held."},
+ {id:"banana", label:"Banana in, Bostrom out", kind:"doc", browser:true, thumb:"banana_p00",
+  lw:"https://www.lesswrong.com/posts/Eft6ehAcvR8MxFbsR/banana-in-bostrom-out-paperclip-maximization-is-one-token",
+  title:"Banana in, Bostrom out: paperclip maximization is one token-direction swap away (in Qwen 3.6-27B)",
+  blurb:"Published on LessWrong. Swapping one Jacobian-lens token direction ( peace →  banana, layers 18–63) flips a fixed superintelligence prompt from “lasting peace” to “maximize the number of paperclips produced”, 3/3 at temperature 0. Controls rule out the cheap explanations. Reproduces in a free browser UI in under a minute.",
+  repo:"github.com/jeffreywilliamportfolio/jlens-basin-swaps",
+  demo:{img:"paperclips", cap:"live capture: the  peace →  banana swap producing the paperclip completion"},
+  pages:seq("banana_p",1),
+  note:"reproduces in a free browser in about a minute. watch the gif."},
+ {id:"lens", label:"Survival of the Fitted", kind:"doc", thumb:"lens_p00",
+  title:"Survival of the Fitted: Cross-Checkpoint Transfer of a Jacobian Lens from Qwen3.6-27B to Qwen3.8-27B",
+  blurb:"A lens fitted on one checkpoint reads its sibling: cross-checkpoint transfer, verified with hard identity checks, reading and steering across the version gap. Published on Zenodo. The instrumentation behind the interpretability work on this desk.",
+  pages:seq("lens_p",6),
+  note:"the same lens reads the next model over. that is the finding."},
+ {id:"giftconnect", label:"Gift Connect", kind:"app", img:"gcicon",
+  title:"Gift Connect — Parenting Suite",
+  blurb:"For caregivers of children birth to three. Everything hangs off the Six Loving Habits — Speak, Sing, Read, Play, Count, Serve & Return — with AI parenting tools (song & story generators, voice assistant), a journal, daily tips, and a cohort dashboard.",
+  facts:[["Status","Shipped — App Store & Google Play, v2.3.0"],
+         ["Stack","Expo SDK 57 · React Native 0.86 · React 19"],
+         ["State/Data","MobX-State-Tree · MMKV · Firebase"],
+         ["Role","Sole engineer — design to store submission"]],
+  shots:["gc_01-home","gc_02-parent-tools","gc_03-cohort","gc_04-tips","gc_05-settings","gc_06-journal"],
+  note:"shipped on both stores. the journal tab is my favorite."},
+ {id:"mindvolume", label:"MindVolume", kind:"app", img:"mvicon", wide:true,
+  title:"MindVolume — a 3D walk through a model's mind",
+  blurb:"Native macOS app (SwiftUI + MetalKit) that renders Jacobian-lens captures of Qwen3.6-27B as an explorable 3D particle field — every point a token direction, positioned by layer and strength. Companion web viewer included.",
+  facts:[["Platform","macOS · SwiftUI · MetalKit"],
+         ["Data","36-capture catalog, Jacobian-lens fields"],
+         ["Repo","github.com/jeffreywilliamportfolio/MindVolume"]],
+  video:"mvwalk", shots:[],
+  note:"this is what a thought looks like in 3D."},
+ {id:"gifttools", label:"Gift Tools", kind:"folder", title:"Gift Tools — deployed web ecosystem",
+  blurb:"Six web tools built and deployed around the Gift Connect mission, sole engineer across all of them.",
+  rows:[["#e2495f","Sammie","Realtime voice parenting agent — live conversations for caregivers","183 commits"],
+        ["#e8a33d","Song Generator","AI songs for the Six Loving Habits, made to order","137 commits"],
+        ["#7c5cd6","Story Generator","Children's stories on demand","58 commits"],
+        ["#3f8fd6","Gift Text Chat","SMS parenting agent over Twilio","53 commits"],
+        ["#2fa36b","Cohort Dashboard","Program cohort tracking for facilitators","36 commits"],
+        ["#c04a4a","GA4 Dashboard","Live analytics grid for the ecosystem","32 commits"]],
+  note:"six deployed tools, one mission, one engineer."},
+ {id:"about", label:"README", kind:"about", title:"About Jeffrey",
+  note:"the pattern to notice: every result ships with the test that could kill it."}
+];
+
+const STOREPAGES={
+ apple:{id:"appstore", label:"App Store", browser:true,
+   lw:"https://apps.apple.com/us/app/gift-connect-parenting-suite/id6741826572",
+   get pages(){return [ASSETS.appstore];},
+   note:"the live listing — 4.8 stars. the address bar goes to the real page."},
+ play:{id:"playstore", label:"Google Play", browser:true,
+   lw:"https://play.google.com/store/apps/details?id=com.giftconnect.parentingsuite",
+   get pages(){return [ASSETS.playstore];},
+   note:"the live listing on Play. the address bar goes to the real page."}
+};
+
+/* montage: all works launch at once; the assistant reviews them in a log box */
+const CLIPS=[
+ {key:"selfcopy_p00", name:"Self-Copy Regime.pdf",
+  log:'<b>selfcopy_regime</b> — one clean claim, replicated across seeds and an independent rig'},
+ {key:"banana_top", name:"Banana in, Bostrom out — LessWrong",
+  log:'<b>banana_in_bostrom_out</b> — published; one token swap → paperclip maximization, 3/3 at temp 0'},
+ {key:"gc_01-home", name:"GiftConnect.app",
+  log:'<b>gift_connect</b> — shipped on the App Store and Google Play, v2.3.0, sole engineer'},
+ {key:"mvmath", video:true, name:"MindVolume.app",
+  log:'<b>mindvolume</b> — native macOS; the answer is lit before one word is written'},
+ {key:"lens_p00", name:"Survival of the Fitted.pdf",
+  log:'<b>survival_of_the_fitted</b> — the lens survives a model update, unmodified'}
+];
+
+/* ---------------- sound ---------------- */
+function sfx(key,vol){ try{ const a=new Audio(ASSETS[key]); a.volume=vol; a.play().catch(()=>{});}catch(e){} }
+
+/* ---------------- intro ---------------- */
+const $=id=>document.getElementById(id);
+const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let timers=[]; const later=(fn,t)=>timers.push(setTimeout(fn,t));
+function typeInto(el,text,cps,done){
+  let i=0; const step=()=>{ el.textContent=text.slice(0,++i);
+    if(i<text.length) timers.push(setTimeout(step,cps)); else done&&done(); };
+  step();
+}
+function buildMontage(){
+  const mt=$("montage");
+  const g=document.createElement("div"); g.id="mgrid"; mt.appendChild(g);
+  CLIPS.forEach((c,i)=>{
+    const d=document.createElement("div"); d.className="mbox"; d.id="mb"+i;
+    const media=c.video
+      ? '<video src="'+ASSETS[c.key]+'" autoplay muted loop playsinline></video>'
+      : '<img alt="" decoding="sync" src="'+ASSETS[c.key]+'">';
+    d.innerHTML='<div class="mhead"><span class="dots3"><i></i><i></i><i></i></span><b>'+c.name+'</b></div>'+
+      '<div class="mmedia"><div class="scan"></div>'+media+'</div>';
+    g.appendChild(d);
+  });
+  const lg=document.createElement("div"); lg.className="mbox"; lg.id="mlog";
+  lg.innerHTML='<div class="mhead"><span class="dots3"><i></i><i></i><i></i></span><b>assistant — review notes</b></div>'+
+    '<div class="mmedia">'+CLIPS.map(c=>'<span class="logline">'+c.log+'</span>').join("")+'</div>';
+  g.appendChild(lg);
+}
+function runScene(){
+  $("au1").src=ASSETS.line1; $("au2").src=ASSETS.line2;
+  buildMontage();
+  gsap.set(".cue",{y:8});
+  const a1=$("a1line");
+  a1.innerHTML=a1.textContent.split(" ").map(w=>'<span class="w" style="display:inline-block">'+w+'</span>').join(" ");
+  const tl=gsap.timeline();
+  tl.to("#cue-j",{opacity:1,y:0,duration:.5,ease:"power2.out"},0)
+    .call(()=>{ sfx("sfx_typing",.35); typeInto($("jline"),"i need help brushing up on my portfolio",42,()=>{$("jcaret").style.display="none";}); },null,.4)
+    .to("#cue-think",{opacity:1,y:0,duration:.45},2.7)
+    .to(".tdots i",{y:-6,duration:.3,ease:"sine.inOut",stagger:{each:.11,yoyo:true,repeat:7}},2.9)
+    .to("#thinkrow .spark",{rotate:360,duration:2.4,ease:"none"},2.8)
+    .to("#cue-think",{opacity:0,duration:.3},5.3)
+    .set("#cue-think",{visibility:"hidden"},5.6)
+    .to("#cue-a1",{opacity:1,y:0,duration:.3},5.45)
+    .fromTo("#a1line .w",{opacity:0,y:8},{opacity:1,y:0,duration:.3,stagger:.05,ease:"power2.out"},5.5)
+    .call(()=>$("au1").play().catch(()=>{}),null,5.5)
+    .call(()=>{$("montage").style.display="block";},null,8.0)
+    .fromTo("#montage",{opacity:0},{opacity:1,duration:.3},8.0);
+  /* all boxes launch together, then the assistant reviews each */
+  CLIPS.forEach((c,i)=>{
+    tl.call(()=>sfx("sfx_whoosh",.25),null,8.2+i*.28)
+      .fromTo("#mb"+i,{opacity:0,y:26,scale:.94},{opacity:1,y:0,scale:1,duration:.5,ease:"back.out(1.3)"},8.2+i*.28);
+  });
+  tl.fromTo("#mlog",{opacity:0,y:26,scale:.94},{opacity:1,y:0,scale:1,duration:.5,ease:"back.out(1.3)"},9.7);
+  const REVIEW=2.2;
+  CLIPS.forEach((c,i)=>{ const t=10.4+i*REVIEW;
+    tl.call(()=>{document.querySelectorAll(".mbox").forEach(x=>x.classList.remove("focus-ring"));
+                 const b=$("mb"+i); b&&b.classList.add("focus-ring");},null,t)
+      .to("#mlog .logline:nth-child("+(i+1)+")",{opacity:1,duration:.35},t+.1);
+  });
+  const tEnd=10.4+CLIPS.length*REVIEW+.6;
+  tl.call(()=>{document.querySelectorAll(".mbox").forEach(x=>x.classList.remove("focus-ring"));},null,tEnd-.4);
+  tl.to("#montage",{opacity:0,duration:.3,onComplete:()=>{$("montage").style.display="none";}},tEnd)
+    .to("#cue-a2",{opacity:1,duration:.5},tEnd+.15)
+    .call(()=>$("au2").play().catch(()=>{}),null,tEnd+.15)
+    .call(()=>{$("enterwrap").style.display="block";},null,tEnd+2.1)
+    .fromTo("#enterbtn",{opacity:0,scale:.9},{opacity:1,scale:1,duration:.5,ease:"back.out(1.7)"},tEnd+2.2)
+    .call(enterDesktop,null,tEnd+4.6);
+}
+function enterDesktop(){
+  if($("desktop").classList.contains("on")) return;
+  timers.forEach(clearTimeout);
+  if(window.gsap) gsap.globalTimeline.clear();
+  ["au1","au2"].forEach(a=>{try{$(a).pause()}catch(e){}});
+  $("stage").style.display="none"; $("skipbtn").style.display="none";
+  $("desktop").classList.add("on"); buildDesktop();
+  sfx("sfx_chime",.35);
+  if(!reduced&&window.gsap){
+    gsap.from("#menubar",{y:-30,duration:.5,ease:"power2.out"});
+    /* the files the assistant read fly to their places on the desk */
+    document.querySelectorAll("#icons .icon").forEach((el,i)=>{
+      const r=el.getBoundingClientRect();
+      const dx=innerWidth/2-(r.left+r.width/2), dy=innerHeight/2-(r.top+r.height/2);
+      gsap.from(el,{x:dx,y:dy,scale:.25,opacity:0,duration:.6,delay:.15+i*.08,ease:"back.out(1.2)",
+        onComplete:()=>gsap.set(el,{clearProps:"transform,opacity"})});
+    });
+    gsap.from("#dock",{y:80,duration:.55,ease:"back.out(1.4)",delay:.35});
+    gsap.from(".ditem",{y:26,opacity:0,stagger:.05,duration:.4,delay:.55,ease:"back.out(1.6)"});
+    gsap.from("#hint",{opacity:0,duration:.8,delay:1.2});
+    gsap.to("#aur1",{x:"-6vw",y:"5vw",duration:26,yoyo:true,repeat:-1,ease:"sine.inOut"});
+    gsap.to("#aur2",{x:"7vw",y:"-4vw",duration:31,yoyo:true,repeat:-1,ease:"sine.inOut"});
+  }
+  later(()=>{const a=new Audio(ASSETS.line4);a.volume=.9;a.play().catch(()=>{});},900);
+  if(matchMedia("(min-width:721px)").matches){
+    later(()=>{const ic=document.querySelector('.icon[data-id="banana"]');
+      openWin(PROJECTS[1], ic||undefined);},1700);
+  }
+  later(showNotif,2800);
+}
+function showNotif(){
+  const n=$("notif"); n.style.display="block";
+  if(!reduced&&window.gsap) gsap.fromTo(n,{x:60,opacity:0},{x:0,opacity:1,duration:.5,ease:"power2.out"});
+  later(hideNotif,7000);
+}
+function hideNotif(){
+  const n=$("notif"); if(n.style.display==="none") return;
+  if(!reduced&&window.gsap) gsap.to(n,{x:60,opacity:0,duration:.35,onComplete:()=>{n.style.display="none";}});
+  else n.style.display="none";
+}
+$("notif").addEventListener("click",()=>{ hideNotif(); openWin(PROJECTS[1],$("mb-assist")); });
+$("mb-assist").addEventListener("click",showNotif);
+$("skipbtn").addEventListener("click",enterDesktop);
+$("playbtn").addEventListener("click",()=>{
+  if(reduced){ enterDesktop(); return; }
+  $("gate").style.display="none";
+  $("script").style.display="block"; $("skipbtn").style.display="block";
+  runScene();
+});
+$("enterbtn").addEventListener("click",enterDesktop);
+
+/* ---------------- desktop ---------------- */
+function tick(){ const d=new Date();
+  $("clock").textContent=d.toLocaleDateString([],{weekday:"short",month:"short",day:"numeric"})+"  "+
+    d.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}); }
+setInterval(tick,20000);
+
+function buildDesktop(){
+  tick();
+  if($("icons").children.length) return;
+  const coarse=matchMedia("(pointer:coarse)").matches;
+  PROJECTS.forEach(p=>{
+    const b=document.createElement("button"); b.className="icon"; b.type="button"; b.dataset.id=p.id;
+    b.innerHTML=glyph(p)+'<span class="label">'+p.label+'</span>';
+    if(coarse){ b.addEventListener("click",e=>openWin(p,e.currentTarget)); }
+    else{
+      b.addEventListener("click",e=>{ document.querySelectorAll(".icon").forEach(x=>x.classList.remove("sel"));
+        e.currentTarget.classList.add("sel"); });
+      b.addEventListener("dblclick",e=>openWin(p,e.currentTarget));
+    }
+    $("icons").appendChild(b);
+    const d=document.createElement("button"); d.className="ditem"; d.type="button";
+    d.innerHTML=glyph(p)+'<span class="dlabel">'+p.label+'</span>';
+    d.addEventListener("click",e=>openWin(p,e.currentTarget));
+    $("dock").appendChild(d);
+  });
+}
+let cascade=0, zTop=20;
+function openWin(p,fromEl){
+  $("hint").style.opacity=0;
+  const ex=document.getElementById("win-"+p.id);
+  if(ex){ focusWin(ex); return; }
+  const w=document.createElement("div"); w.className="win"; w.id="win-"+p.id;
+  const off=(cascade++%6)*26;
+  w.style.left="calc(max(14px, 5vw) + "+off+"px)"; w.style.top=(52+off)+"px";
+  let body="";
+  if(p.browser){
+    body='<div class="browserpage">'+p.pages.map(u=>'<img class="lwpage" src="'+u+'" alt="captured page">').join("")+'</div>'+
+      (p.demo?'<div class="browserfoot"><span class="cap">from the companion repo — live capture of the swap:</span>'+
+      '<img src="'+ASSETS[p.demo.img]+'" alt="demo recording">'+
+      '<a href="https://'+p.repo+'" target="_blank" rel="noopener">'+p.repo+' ↗</a></div>':"");
+  }else if(p.kind==="doc"){
+    body='<div class="docmeta"><h2>'+p.title+'</h2><p>'+p.blurb+'</p>'+
+      (p.doi?'<div class="doi">DOI&ensp;<a href="https://doi.org/'+p.doi+'" target="_blank" rel="noopener">'+p.doi+'</a></div>':"")+
+      (p.lw?'<div class="doi">post&ensp;<a href="'+p.lw+'" target="_blank" rel="noopener">read on LessWrong</a></div>':"")+
+      (p.repo?'<div class="doi">repo&ensp;<a href="https://'+p.repo+'" target="_blank" rel="noopener">'+p.repo+'</a></div>':"")+'</div>'+
+      '<div class="pages">'+p.pages.map(u=>'<img loading="lazy" src="'+u+'" alt="page">').join("")+'</div>'+
+      (p.demo?'<figure class="demo"><img src="'+ASSETS[p.demo.img]+'" alt="demo recording"><figcaption>'+p.demo.cap+'</figcaption></figure>':"");
+  }else if(p.kind==="app"){
+    body='<div class="docmeta"><h2>'+p.title+'</h2><p>'+p.blurb+'</p></div>'+
+      '<div class="facts">'+p.facts.map(f=>"<div><b>"+f[0]+"</b><span>"+f[1]+"</span></div>").join("")+'</div>'+
+      (p.id==="giftconnect"?'<div class="storebtns">'+
+        '<button type="button" data-store="apple"><span><small>View on the</small>App Store</span></button>'+
+        '<button type="button" data-store="play"><span><small>Get it on</small>Google Play</span></button></div>':"")+
+      (p.video?'<figure class="demo"><video src="'+ASSETS[p.video]+'" controls preload="metadata" playsinline poster="'+ASSETS.mindvolume+'" style="width:100%;max-width:920px;border-radius:8px"></video><figcaption>walkthrough, captured from the app — press play, scrub freely</figcaption></figure>':"")+
+      (p.shots.length?'<div class="shots'+(p.wide?" wide":"")+'">'+p.shots.map(k=>'<img loading="lazy" src="'+ASSETS[k]+'" alt="screenshot">').join("")+'</div>':"");
+  }else if(p.kind==="folder"){
+    body='<div class="docmeta"><h2>'+p.title+'</h2><p>'+p.blurb+'</p></div>'+
+      '<div class="frows">'+p.rows.map(r=>'<div class="frow"><i class="fdot" style="background:'+r[0]+'"></i><b>'+r[1]+'</b><span>'+r[2]+'</span><em class="fchip">'+r[3]+'</em></div>').join("")+'</div>'+
+      '<div class="ffoot">Deployed for the Gift Connect organization; links available on request.</div>';
+  }else{
+    body='<div class="prose">'+
+     '<p>Independent AI-interpretability researcher in Salt Lake City. Audio-engineering degree, four years as a full-stack/AI engineer for a nonprofit. In five months of self-funded work on rented GPUs: a confound discovery that killed six stages of his own results and forced a methodology rebuild; a cross-model routing effect replicated on six architectures from four labs; the discovery and causal characterization of a single interpretable expert (E114) in Qwen3.5-35B; a cross-scale replication that honestly <em>bounded</em> the result; DOI’d preprints including two self-correcting methods papers; and public artifacts that make the work explorable in under a minute.</p>'+
+     '<p>The through-line: every headline result was followed by the control that could kill it, and the killings were published at equal prominence.</p>'+
+     '<h3>Preprints (Zenodo)</h3><ul class="mono">'+
+      [["21892999","Self-copy regime — in-context availability reorganizes MoE routing"],
+       ["20709736","E114 program compendium"],
+       ["20779602","Token-position confound (methods, self-correcting)"],
+       ["20779604","Expert specialization under generation"],
+       ["20786891","Distributed safety routing"],
+       ["20449546","DMRA"],
+       ["20709561","Machine minds: an ethical threshold"]]
+      .map(d=>'<li><a href="https://doi.org/10.5281/zenodo.'+d[0]+'" target="_blank" rel="noopener">10.5281/zenodo.'+d[0]+'</a> — '+d[1]+"</li>").join("")+
+     '</ul><h3>Contact</h3><p class="mono">jeffrey.w.shorthill@gmail.com</p></div>';
+  }
+  const CHEV_L='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>';
+  const CHEV_R='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+  const tb = p.browser
+    ? '<div class="titlebar"><div class="lights">'+
+      '<button class="light l-close" aria-label="close window"></button>'+
+      '<span class="light l-min"></span><button class="light l-max" aria-label="maximize"></button></div>'+
+      '<span class="navbtns">'+CHEV_L+CHEV_R+'</span>'+
+      '<span class="urlpill" role="link" tabindex="0" title="Open the real post in a new tab">'+
+      '<span class="lock">🔒</span><span class="url">'+p.lw.replace("https://","")+'</span><span class="ext">open ↗</span></span></div>'
+    : '<div class="titlebar"><div class="lights">'+
+      '<button class="light l-close" aria-label="close window"></button>'+
+      '<span class="light l-min"></span><button class="light l-max" aria-label="maximize"></button></div>'+
+      '<span class="tname">'+p.label+'</span></div>';
+  if(p.browser) w.classList.add("browser");
+  w.innerHTML=tb+
+    (p.note?'<div class="anote"><span class="spark">✦</span>assistant: '+p.note+'</div>':"")+
+    '<div class="winbody">'+body+'</div>';
+  $("desktop").appendChild(w);
+  w.querySelector(".l-close").addEventListener("click",()=>closeWin(w));
+  w.querySelector(".l-max").addEventListener("click",()=>w.classList.toggle("maxed"));
+  w.querySelectorAll("[data-store]").forEach(b=>
+    b.addEventListener("click",e=>openWin(STOREPAGES[b.dataset.store], e.currentTarget)));
+  const up=w.querySelector(".urlpill");
+  if(up){ const go=()=>window.open(p.lw,"_blank","noopener");
+    up.addEventListener("click",go);
+    up.addEventListener("keydown",e=>{if(e.key==="Enter")go();}); }
+  w.addEventListener("pointerdown",()=>focusWin(w));
+  dragify(w); focusWin(w);
+  if(!reduced&&window.gsap&&fromEl&&matchMedia("(min-width:721px)").matches){
+    const ir=fromEl.getBoundingClientRect(), wr=w.getBoundingClientRect();
+    gsap.from(w,{x:(ir.left+ir.width/2)-(wr.left+wr.width/2), y:(ir.top+ir.height/2)-(wr.top+wr.height/2),
+                 scale:.15, opacity:0, duration:.45, ease:"power3.out",
+                 onComplete:()=>gsap.set(w,{clearProps:"transform,opacity"})});
+  }
+}
+function closeWin(w){
+  if(!reduced&&window.gsap&&matchMedia("(min-width:721px)").matches){
+    gsap.to(w,{scale:.85,opacity:0,duration:.18,ease:"power2.in",onComplete:()=>w.remove()});
+  } else w.remove();
+}
+addEventListener("keydown",e=>{ if(e.key==="Escape"){ const t=document.querySelector(".win.focus"); if(t) closeWin(t); }});
+function focusWin(w){ document.querySelectorAll(".win").forEach(x=>x.classList.remove("focus"));
+  w.classList.add("focus"); w.style.zIndex=++zTop; }
+function dragify(w){
+  const tb=w.querySelector(".titlebar"); let sx,sy,ox,oy,drag=false;
+  tb.addEventListener("pointerdown",e=>{ if(e.target.classList.contains("light"))return;
+    drag=true; sx=e.clientX; sy=e.clientY; const r=w.getBoundingClientRect(); ox=r.left; oy=r.top;
+    tb.setPointerCapture(e.pointerId); });
+  tb.addEventListener("pointermove",e=>{ if(!drag)return;
+    w.style.left=Math.max(-200,ox+e.clientX-sx)+"px";
+    w.style.top=Math.max(30,oy+e.clientY-sy)+"px"; });
+  tb.addEventListener("pointerup",()=>drag=false);
+}
+</script>
