@@ -411,7 +411,6 @@ function setState(i){
 }
 function runScene(){
   $("au1").src=ASSETS.line1; $("au2").src=ASSETS.line2;
-  buildMontage();
   gsap.set(".cue",{y:8});
   const a1=$("a1line");
   a1.innerHTML=a1.textContent.split(" ").map(w=>'<span class="w" style="display:inline-block">'+w+'</span>').join(" ");
