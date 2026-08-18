@@ -116,7 +116,7 @@
   #hint{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);z-index:5;
         color:rgba(240,242,246,.55);font-size:12.5px;letter-spacing:.05em;pointer-events:none;
         transition:opacity .6s}
-  #icons{position:absolute;top:52px;right:26px;display:grid;grid-template-columns:repeat(2,96px);
+  #icons{position:absolute;top:52px;right:26px;display:grid;grid-template-columns:repeat(3,96px);
          gap:10px 14px;z-index:10;align-items:start}
   .icon{width:96px;background:none;border:none;border-radius:8px;padding:8px 4px 6px;text-align:center;color:#fff}
   .icon:hover,.icon:focus-visible{background:rgba(255,255,255,.10);outline:none}
@@ -240,7 +240,7 @@
   .demo figcaption{font-family:var(--mono);font-size:11.5px;color:#9aa7b8}
 
   @media (max-width:720px){
-    #icons{grid-template-columns:repeat(2,86px);right:12px}
+    #icons{grid-template-columns:repeat(3,86px);right:8px}
     #dock{display:none}
     #hint{bottom:24px}
     .win{inset:30px 0 0 0 !important;width:100vw;max-height:none;border-radius:0;transform:none !important}
@@ -342,6 +342,26 @@ const PROJECTS=[
   blurb:"A lens fitted on one checkpoint reads its sibling: cross-checkpoint transfer, verified with hard identity checks, reading and steering across the version gap. Published on Zenodo. The instrumentation behind the interpretability work on this desk.",
   pages:seq("lens_p",6),
   note:"the same lens reads the next model over. that is the finding."},
+ {id:"entropy", label:"Routing Entropy", kind:"doc", thumb:"entropy_p00",
+  title:"When Routing Entropy Tracks Length, Not Complexity: A Sequence-Position Confound in MoE Routing Analyses",
+  blurb:"A self-refutation: our earlier complexity\u2013routing-entropy result reverses once a sequence-position confound is measured correctly. The corrected analysis replicates across DeepSeek V3.1 and Qwen3.5-397B. Published on Zenodo, CC BY 4.0.",
+  doi:"10.5281/zenodo.20779602", pages:seq("entropy_p",6),
+  note:"the paper that retired our own earlier claim. on purpose."},
+ {id:"genhalf", label:"Generation Half", kind:"doc", thumb:"genhalf_p00",
+  title:"The Generation Half: MoE Expert Specialization Is Invisible in Prefill and Emerges During Generation",
+  blurb:"Expert specialization that a widely cited negative result declared absent is real \u2014 it just lives in generation, not prefill. Rebuttal with mechanism, replicating at 122B. Published on Zenodo, CC BY 4.0.",
+  doi:"10.5281/zenodo.20779604", pages:seq("genhalf_p",6),
+  note:"everyone measured the prefill half. the other half is where it happens."},
+ {id:"gate", label:"Safety Gate", kind:"doc", thumb:"gate_p00",
+  title:"No Single Safety Gate: Harm-Refusal Routing Is Distributed and Survives Lead-Expert Suppression",
+  blurb:"Suppressing the lead \u201crefusal expert\u201d does not unlock harm: routing reallocates and harmful completions stay at zero. Refusal is a crowd, not a gate. Published on Zenodo, CC BY 4.0.",
+  doi:"10.5281/zenodo.20786891", pages:seq("gate_p",7),
+  note:"we tried to break the gate. the gate turned out to be a crowd."},
+ {id:"dmra", label:"DMRA Protocol", kind:"doc", thumb:"dmra_p00",
+  title:"The Dialect-Marked Response Audit: A Matched-Pair Protocol for Isolating Dialect-Associated Differences in Safety-Critical Support",
+  blurb:"A six-stage audit protocol for safety-support equivalence across dialect-marked prompts \u2014 each stage derived from a documented failure of our own earlier audit. Case study: a token-matched pair where the base model gives one user a crisis hotline and the other none, and a keyword safety screen whose base-model \u201cunsafe\u201d flags were 100% false alarms.",
+  pdf:"dmra-protocol-v3.1.pdf", pages:seq("dmra_p",8),
+  note:"every stage exists because skipping it burned us."},
  {id:"giftconnect", label:"Gift Connect", kind:"app", img:"gcicon",
   title:"Gift Connect — Parenting Suite",
   blurb:"For caregivers of children birth to three. Everything hangs off the Six Loving Habits — Speak, Sing, Read, Play, Count, Serve & Return — with AI parenting tools (song & story generators, voice assistant), a journal, daily tips, and a cohort dashboard.",
@@ -539,7 +559,7 @@ function openWin(p,fromEl){
       (p.doi?'<div class="doi">DOI&ensp;<a href="https://doi.org/'+p.doi+'" target="_blank" rel="noopener">'+p.doi+'</a></div>':"")+
       (p.lw?'<div class="doi">post&ensp;<a href="'+p.lw+'" target="_blank" rel="noopener">read on LessWrong</a></div>':"")+
       (p.repo?'<div class="doi">repo&ensp;<a href="https://'+p.repo+'" target="_blank" rel="noopener">'+p.repo+'</a></div>':"")+
-      (p.resumelink?'<div class="doi">pdf&ensp;<a href="resume.pdf" target="_blank" rel="noopener">download resume.pdf</a></div>':"")+'</div>'+
+      (p.pdf?'<div class="doi">pdf&ensp;<a href="'+p.pdf+'" target="_blank" rel="noopener">download '+p.pdf+'</a></div>':"")+(p.resumelink?'<div class="doi">pdf&ensp;<a href="resume.pdf" target="_blank" rel="noopener">download resume.pdf</a></div>':"")+'</div>'+
       '<div class="pages">'+p.pages.map(u=>'<img loading="lazy" src="'+u+'" alt="page">').join("")+'</div>'+
       (p.demo?'<figure class="demo"><img src="'+ASSETS[p.demo.img]+'" alt="demo recording"><figcaption>'+p.demo.cap+'</figcaption></figure>':"");
   }else if(p.kind==="app"){

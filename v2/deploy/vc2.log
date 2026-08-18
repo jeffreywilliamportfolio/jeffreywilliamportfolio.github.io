@@ -1,0 +1,41 @@
+<claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
+[2mVercel CLI 59.1.4 (Node.js 20.19.6)[22m
+Deploying [1mjwshorthill[22m
+Uploading [0m[--------------------] (0.0B/12.9MB)[0m
+Uploading [0m[=====---------------] (3.2MB/12.9MB)[0m
+Uploading [0m[==========----------] (6.5MB/12.9MB)[0m
+Uploading [0m[===============-----] (9.7MB/12.9MB)[0m
+Uploading [0m[====================] (12.9MB/12.9MB)[0m
+  [1mInspect         [22m[1m[36mhttps://vercel.com/jeffreywilliamportfolios-projects/jwshorthill/Fw47MZDEPQYCp7tURvp7ZEey79vo[39m[22m
+  [1mProduction      [22m[1m[36mhttps://jwshorthill-m6qmpdkc1-jeffreywilliamportfolios-projects.vercel.app[39m[22m
+Building…
+Building…
+[2K[1A[2K[G  [1mProduction      [22m[1m[36mhttps://jwshorthill-m6qmpdkc1-jeffreywilliamportfolios-projects.vercel.app[39m[22m
+Completing…
+▲ [1mAliased         [22m[1m[36mhttps://jwshorthill.vercel.app[39m[22m
+{
+  "status": "ok",
+  "deployment": {
+    "id": "dpl_Fw47MZDEPQYCp7tURvp7ZEey79vo",
+    "url": "https://jwshorthill-m6qmpdkc1-jeffreywilliamportfolios-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/jeffreywilliamportfolios-projects/jwshorthill/Fw47MZDEPQYCp7tURvp7ZEey79vo",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_Fw47MZDEPQYCp7tURvp7ZEey79vo"
+  },
+  "message": "Deployment jwshorthill-m6qmpdkc1-jeffreywilliamportfolios-projects.vercel.app ready.",
+  "next": [
+    {
+      "command": "vercel curl https://jwshorthill-m6qmpdkc1-jeffreywilliamportfolios-projects.vercel.app",
+      "when": "Verify deployment, including when Deployment Protection is enabled"
+    },
+    {
+      "command": "vercel inspect jwshorthill-m6qmpdkc1-jeffreywilliamportfolios-projects.vercel.app",
+      "when": "Inspect deployment"
+    },
+    {
+      "command": "vercel deploy --prod",
+      "when": "Promote to production"
+    }
+  ]
+}

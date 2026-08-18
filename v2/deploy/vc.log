@@ -1,0 +1,14 @@
+<claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
+[2mVercel CLI 59.1.4 (Node.js 20.19.6)[22m
+Deploying [1mjwshorthill[22m
+{
+  "status": "error",
+  "reason": "deploy_failed",
+  "message": "Not authorized",
+  "next": [
+    {
+      "command": "vercel deploy",
+      "when": "retry deploy"
+    }
+  ]
+}

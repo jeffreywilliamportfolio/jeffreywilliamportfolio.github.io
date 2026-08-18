@@ -1,0 +1,45 @@
+<claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
+[2mVercel CLI 59.1.4 (Node.js 20.19.6)[22m
+Deploying [1mjwshorthill[22m
+Uploading [0m[--------------------] (0.0B/14.4MB)[0m
+Uploading [0m[=====---------------] (3.6MB/14.4MB)[0m
+Uploading [0m[==========----------] (7.2MB/14.4MB)[0m
+Uploading [0m[===============-----] (10.8MB/14.4MB)[0m
+Uploading [0m[====================] (14.4MB/14.4MB)[0m
+  [1mInspect         [22m[1m[36mhttps://vercel.com/jeffreywilliamportfolios-projects/jwshorthill/4c2F5JJRQziB4a8dZcQD1CM9KP8k[39m[22m
+  [1mProduction      [22m[1m[36mhttps://jwshorthill-7rwhrlmii-jeffreywilliamportfolios-projects.vercel.app[39m[22m
+Building…
+Running build in Washington, D.C., USA (East) – iad1
+Build machine configuration: 2 cores, 8 GB
+Retrieving list of deployment files...
+Previous build caches not available.
+Previous build caches not available.
+[2K[1A[2K[G  [1mProduction      [22m[1m[36mhttps://jwshorthill-7rwhrlmii-jeffreywilliamportfolios-projects.vercel.app[39m[22m
+Completing…
+▲ [1mAliased         [22m[1m[36mhttps://jwshorthill.vercel.app[39m[22m
+{
+  "status": "ok",
+  "deployment": {
+    "id": "dpl_4c2F5JJRQziB4a8dZcQD1CM9KP8k",
+    "url": "https://jwshorthill-7rwhrlmii-jeffreywilliamportfolios-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/jeffreywilliamportfolios-projects/jwshorthill/4c2F5JJRQziB4a8dZcQD1CM9KP8k",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_4c2F5JJRQziB4a8dZcQD1CM9KP8k"
+  },
+  "message": "Deployment jwshorthill-7rwhrlmii-jeffreywilliamportfolios-projects.vercel.app ready.",
+  "next": [
+    {
+      "command": "vercel curl https://jwshorthill-7rwhrlmii-jeffreywilliamportfolios-projects.vercel.app",
+      "when": "Verify deployment, including when Deployment Protection is enabled"
+    },
+    {
+      "command": "vercel inspect jwshorthill-7rwhrlmii-jeffreywilliamportfolios-projects.vercel.app",
+      "when": "Inspect deployment"
+    },
+    {
+      "command": "vercel deploy --prod",
+      "when": "Promote to production"
+    }
+  ]
+}
