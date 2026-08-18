@@ -281,7 +281,7 @@
     <div id="statebox"><div id="staterow"><span id="stateicon"></span><span id="statetext"></span><span id="statecite"></span></div></div>
     <div class="cue ai" id="cue-a2">
       <span class="who">ASSISTANT</span>
-      <span class="line">Jeffrey, I&rsquo;d be happy to put together a portfolio.</span>
+      <span class="line">And you must be one of the people he mentioned &mdash; welcome. Everything&rsquo;s set up on his desk. Come take a look.</span>
     </div>
     <div id="enterwrap"><button id="enterbtn" type="button">Enter Portfolio</button></div>
   </div>
@@ -427,29 +427,29 @@ function runScene(){
   a1.innerHTML=a1.textContent.split(" ").map(w=>'<span class="w" style="display:inline-block">'+w+'</span>').join(" ");
   const tl=gsap.timeline();
   tl.to("#cue-j",{opacity:1,y:0,duration:.5,ease:"power2.out"},0)
-    .call(()=>{ sfx("sfx_typing",.35); typeInto($("jline"),"i need help brushing up on my portfolio",42,()=>{$("jcaret").style.display="none";}); },null,.4)
-    .to("#cue-think",{opacity:1,y:0,duration:.45},2.7)
-    .to(".tdots i",{y:-6,duration:.3,ease:"sine.inOut",stagger:{each:.11,yoyo:true,repeat:7}},2.9)
-    .to("#thinkrow .spark",{rotate:360,duration:2.4,ease:"none"},2.8)
-    .to("#cue-think",{opacity:0,duration:.3},5.3)
-    .set("#cue-think",{visibility:"hidden"},5.6)
-    .to("#cue-a1",{opacity:1,y:0,duration:.3},5.45)
-    .fromTo("#a1line .w",{opacity:0,y:8},{opacity:1,y:0,duration:.3,stagger:.05,ease:"power2.out"},5.5)
-    .call(()=>$("au1").play().catch(()=>{}),null,5.5)
-    .call(()=>{$("statebox").style.display="block"; setState(0);},null,7.9)
-    .fromTo("#statebox",{opacity:0,y:12},{opacity:1,y:0,duration:.45,ease:"power2.out"},7.9);
-  STATES.forEach((st,i)=>{ if(i===0) return; const t=8.3+i*STATE_DUR;
+    .call(()=>{ sfx("sfx_typing",.35); typeInto($("jline"),"hey, i need to show my portfolio to some job prospects. can you walk them through it?",42,()=>{$("jcaret").style.display="none";}); },null,.4)
+    .to("#cue-think",{opacity:1,y:0,duration:.45},4.3)
+    .to(".tdots i",{y:-6,duration:.3,ease:"sine.inOut",stagger:{each:.11,yoyo:true,repeat:7}},4.5)
+    .to("#thinkrow .spark",{rotate:360,duration:2.4,ease:"none"},4.4)
+    .to("#cue-think",{opacity:0,duration:.3},6.9)
+    .set("#cue-think",{visibility:"hidden"},7.2)
+    .to("#cue-a1",{opacity:1,y:0,duration:.3},7.05)
+    .fromTo("#a1line .w",{opacity:0,y:8},{opacity:1,y:0,duration:.3,stagger:.05,ease:"power2.out"},7.1)
+    .call(()=>$("au1").play().catch(()=>{}),null,7.1)
+    .call(()=>{$("statebox").style.display="block"; setState(0);},null,9.5)
+    .fromTo("#statebox",{opacity:0,y:12},{opacity:1,y:0,duration:.45,ease:"power2.out"},9.5);
+  STATES.forEach((st,i)=>{ if(i===0) return; const t=9.9+i*STATE_DUR;
     tl.call(()=>sfx("sfx_whoosh",.18),null,t)
       .to("#staterow",{opacity:0,y:-8,duration:.22,ease:"power2.in"},t)
       .call(()=>setState(i),null,t+.24)
       .fromTo("#staterow",{opacity:0,y:10},{opacity:1,y:0,duration:.3,ease:"power2.out"},t+.26); });
-  const tEnd=8.3+(STATES.length-1)*STATE_DUR+LAST_DUR;
+  const tEnd=9.9+(STATES.length-1)*STATE_DUR+LAST_DUR;
   tl.to("#statebox",{opacity:0,y:-8,duration:.35,onComplete:()=>{$("statebox").style.display="none";}},tEnd)
     .to("#cue-a2",{opacity:1,duration:.5},tEnd+.15)
     .call(()=>$("au2").play().catch(()=>{}),null,tEnd+.15)
     .call(()=>{$("enterwrap").style.display="block";},null,tEnd+2.1)
     .fromTo("#enterbtn",{opacity:0,scale:.9},{opacity:1,scale:1,duration:.5,ease:"back.out(1.7)"},tEnd+2.2)
-    .call(enterDesktop,null,tEnd+4.6);
+    .call(enterDesktop,null,tEnd+7.0);
 }
 function enterDesktop(){
   if($("desktop").classList.contains("on")) return;
