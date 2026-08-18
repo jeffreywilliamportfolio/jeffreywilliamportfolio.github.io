@@ -255,6 +255,7 @@
 
 <div id="stage">
   <div id="gate">
+    <h1 id="gatename">Jeffrey William Shorthill</h1>
     <div id="playwrap">
       <div id="playring"></div>
       <button id="playbtn" type="button" aria-label="Play with sound">
@@ -265,7 +266,7 @@
   </div>
   <div id="script">
     <div class="cue big" id="cue-j">
-      <span class="who">JEFFREY</span>
+      <span class="who">JEFFREY WILLIAM SHORTHILL</span>
       <span class="line" id="jline"></span><span class="caret" id="jcaret"></span>
     </div>
     <div class="slot">
@@ -275,7 +276,7 @@
       </div>
       <div class="cue ai" id="cue-a1">
         <span class="who">ASSISTANT</span>
-        <span class="line" id="a1line">Got it! The portfolio is ready. Mobile Apps, SaaS Suites, Research Papers and Resume. Click below to enter!</span>
+        <span class="line" id="a1line">On it! The portfolio is ready. It includes Mobile Apps, SaaS Suites, Research Papers and Resume. Click below to enter!</span>
       </div>
     </div>
     <div id="statebox"><div id="staterow"><span id="stateicon"></span><span id="statetext"></span><span id="statecite"></span></div></div>
@@ -423,17 +424,17 @@ function runScene(){
   a1.innerHTML=a1.textContent.split(" ").map(w=>'<span class="w" style="display:inline-block">'+w+'</span>').join(" ");
   const tl=gsap.timeline();
   tl.to("#cue-j",{opacity:1,y:0,duration:.5,ease:"power2.out"},0)
-    .call(()=>{ sfx("sfx_typing",.35); typeInto($("jline"),"hey, i need to show my portfolio to some job prospects. can you walk them through it?",42,()=>{$("jcaret").style.display="none";}); },null,.4)
-    .to("#cue-think",{opacity:1,y:0,duration:.45},4.3)
-    .to(".tdots i",{y:-6,duration:.3,ease:"sine.inOut",stagger:{each:.11,yoyo:true,repeat:11}},4.5)
-    .to("#thinkrow .spark",{rotate:360,duration:3.0,ease:"none"},4.4)
-    .to("#cue-think",{opacity:0,duration:.3},7.6)
-    .set("#cue-think",{visibility:"hidden"},7.9)
-    .to("#cue-a1",{opacity:1,y:0,duration:.3},7.75)
-    .fromTo("#a1line .w",{opacity:0,y:8},{opacity:1,y:0,duration:.3,stagger:.05,ease:"power2.out"},7.8)
-    .call(()=>$("au1").play().catch(()=>{}),null,7.8)
-    .call(()=>{$("enterwrap").style.display="block";},null,8.5)
-    .fromTo("#enterbtn",{opacity:0,scale:.9},{opacity:1,scale:1,duration:.5,ease:"back.out(1.7)"},8.6);
+    .call(()=>{ sfx("sfx_typing",.35); typeInto($("jline"),"Hey chat, after years of developing AI software for underserved populations across the globe, I\u2019m pivoting to full-time AI research. The stakes are simply too high not to. Can you update my portfolio so hiring managers can see what I\u2019ve been cooking?",16,()=>{$("jcaret").style.display="none";}); },null,.4)
+    .to("#cue-think",{opacity:1,y:0,duration:.45},4.7)
+    .to(".tdots i",{y:-6,duration:.3,ease:"sine.inOut",stagger:{each:.11,yoyo:true,repeat:12}},4.9)
+    .to("#thinkrow .spark",{rotate:360,duration:3.0,ease:"none"},4.8)
+    .to("#cue-think",{opacity:0,duration:.3},7.7)
+    .set("#cue-think",{visibility:"hidden"},8.0)
+    .to("#cue-a1",{opacity:1,y:0,duration:.3},7.85)
+    .fromTo("#a1line .w",{opacity:0,y:8},{opacity:1,y:0,duration:.3,stagger:.05,ease:"power2.out"},7.95)
+    .call(()=>$("au1").play().catch(()=>{}),null,7.95)
+    .call(()=>{$("enterwrap").style.display="block";},null,8.8)
+    .fromTo("#enterbtn",{opacity:0,scale:.9},{opacity:1,scale:1,duration:.5,ease:"back.out(1.7)"},8.9);
 }
 function enterDesktop(){
   if($("desktop").classList.contains("on")) return;
@@ -484,6 +485,14 @@ $("playbtn").addEventListener("click",()=>{
   runScene();
 });
 $("enterbtn").addEventListener("click",enterDesktop);
+(function(){
+  const n=$("gatename"); if(!n) return;
+  const txt=n.textContent;
+  n.innerHTML=txt.split("").map(ch=>ch===" "?" ":'<span class="gl" style="display:inline-block">'+ch+'</span>').join("");
+  if(window.gsap && !matchMedia("(prefers-reduced-motion: reduce)").matches){
+    gsap.fromTo("#gatename .gl",{opacity:0,x:-22},{opacity:1,x:0,duration:.55,stagger:.035,ease:"power3.out",delay:.15});
+  }
+})();
 
 /* ---------------- desktop ---------------- */
 function tick(){ const d=new Date();
