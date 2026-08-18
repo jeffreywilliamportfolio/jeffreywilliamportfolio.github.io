@@ -203,7 +203,9 @@
          background:#2a2416;border-bottom:1px solid rgba(255,180,84,.25);
          font-family:var(--mono);font-size:12.5px;color:#ffd9a1}
   .anote .spark{color:var(--accent)}
-  .winbody{overflow-y:auto;overflow-x:hidden;background:#eceae4}
+  .winbody{overflow-y:auto;overflow-x:hidden;background:#eceae4;touch-action:manipulation}
+  .winbody.zooming{overflow:hidden;cursor:grab}
+  .winbody.zooming>*:first-child{will-change:transform}
   .docmeta{padding:18px 22px 14px;background:var(--win);border-bottom:1px solid rgba(0,0,0,.08)}
   .docmeta h2{font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:1.35;text-wrap:balance}
   .docmeta p{margin-top:7px;font-size:13.5px;line-height:1.6;color:var(--paper-dim);max-width:64ch}
@@ -602,7 +604,7 @@ function openWin(p,fromEl){
     up.addEventListener("click",go);
     up.addEventListener("keydown",e=>{if(e.key==="Enter")go();}); }
   w.addEventListener("pointerdown",()=>focusWin(w));
-  dragify(w); focusWin(w);
+  dragify(w); pinchify(w); focusWin(w);
   if(!reduced&&window.gsap&&fromEl&&matchMedia("(min-width:721px)").matches){
     const ir=fromEl.getBoundingClientRect(), wr=w.getBoundingClientRect();
     gsap.from(w,{x:(ir.left+ir.width/2)-(wr.left+wr.width/2), y:(ir.top+ir.height/2)-(wr.top+wr.height/2),
@@ -618,6 +620,85 @@ function closeWin(w){
 addEventListener("keydown",e=>{ if(e.key==="Escape"){ const t=document.querySelector(".win.focus"); if(t) closeWin(t); }});
 function focusWin(w){ document.querySelectorAll(".win").forEach(x=>x.classList.remove("focus"));
   w.classList.add("focus"); w.style.zIndex=++zTop; }
+/* pinchify: iOS-style pinch-to-zoom inside a window body.
+   2-finger pinch zooms around the fingers; 1-finger pans while zoomed;
+   double-tap toggles 2.2x at the tap point; trackpad ctrl+wheel zooms on desktop.
+   At 1x the transform is cleared and native scrolling returns. */
+function pinchify(w){
+  const vb=w.querySelector(".winbody"); if(!vb) return;
+  const c=vb.firstElementChild; if(!c) return;
+  let sc=1, tx=0, ty=0, pinch=null, pan=null, lastTap=0;
+  const MAXS=4;
+  const apply=()=>{ c.style.transformOrigin="0 0";
+    c.style.transform=(sc===1)?"":("translate("+tx+"px,"+ty+"px) scale("+sc+")"); };
+  const clamp=()=>{
+    const W=c.offsetWidth*sc, H=c.offsetHeight*sc, cw=vb.clientWidth, ch=vb.clientHeight;
+    tx=(W<=cw)?(cw-W)/2:Math.min(0,Math.max(cw-W,tx));
+    ty=(H<=ch)?Math.min(0,(ch-H)/2):Math.min(0,Math.max(ch-H,ty));
+  };
+  const enter=()=>{ if(vb.classList.contains("zooming"))return;
+    ty=-vb.scrollTop; tx=0; vb.classList.add("zooming"); };
+  const exit=()=>{ const st=-ty; sc=1; tx=0; ty=0; apply();
+    vb.classList.remove("zooming"); vb.scrollTop=Math.max(0,st); };
+  const zoomAt=(ns,ax,ay)=>{
+    ns=Math.min(MAXS,Math.max(1,ns));
+    if(sc===1&&ns>1) enter();
+    const cx=(ax-tx)/sc, cy=(ay-ty)/sc;
+    sc=ns; tx=ax-cx*sc; ty=ay-cy*sc;
+    if(sc<=1.02){ exit(); return; }
+    clamp(); apply();
+  };
+  vb.addEventListener("touchstart",e=>{
+    if(e.touches.length===2){
+      e.preventDefault();
+      const [a,b]=e.touches, r=vb.getBoundingClientRect();
+      if(sc===1) enter();
+      pinch={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),
+             mx:(a.clientX+b.clientX)/2-r.left, my:(a.clientY+b.clientY)/2-r.top,
+             s:sc, tx:tx, ty:ty};
+      pan=null;
+    } else if(e.touches.length===1){
+      const t=e.touches[0], now=Date.now();
+      if(now-lastTap<300){
+        const r=vb.getBoundingClientRect();
+        zoomAt(sc>1?1:2.2, t.clientX-r.left, t.clientY-r.top);
+        e.preventDefault(); lastTap=0; return;
+      }
+      lastTap=now;
+      if(sc>1){ pan={x:t.clientX,y:t.clientY,tx:tx,ty:ty}; }
+    }
+  },{passive:false});
+  vb.addEventListener("touchmove",e=>{
+    if(e.touches.length===2&&pinch){
+      e.preventDefault();
+      const [a,b]=e.touches, r=vb.getBoundingClientRect();
+      const d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+      const mx=(a.clientX+b.clientX)/2-r.left, my=(a.clientY+b.clientY)/2-r.top;
+      let ns=Math.min(MAXS,Math.max(1,pinch.s*(d/pinch.d)));
+      const cx=(pinch.mx-pinch.tx)/pinch.s, cy=(pinch.my-pinch.ty)/pinch.s;
+      sc=ns; tx=mx-cx*ns; ty=my-cy*ns;
+      clamp(); apply();
+    } else if(e.touches.length===1&&pan&&sc>1){
+      e.preventDefault();
+      const t=e.touches[0];
+      tx=pan.tx+(t.clientX-pan.x); ty=pan.ty+(t.clientY-pan.y);
+      clamp(); apply();
+    }
+  },{passive:false});
+  vb.addEventListener("touchend",e=>{
+    if(e.touches.length<2) pinch=null;
+    if(e.touches.length<1) pan=null;
+    if(sc<=1.02&&vb.classList.contains("zooming")) exit();
+  });
+  vb.addEventListener("gesturestart",e=>e.preventDefault());
+  vb.addEventListener("gesturechange",e=>e.preventDefault());
+  vb.addEventListener("wheel",e=>{
+    if(!e.ctrlKey) return;
+    e.preventDefault();
+    const r=vb.getBoundingClientRect();
+    zoomAt(sc*Math.exp(-e.deltaY*0.012), e.clientX-r.left, e.clientY-r.top);
+  },{passive:false});
+}
 function dragify(w){
   const tb=w.querySelector(".titlebar"); let sx,sy,ox,oy,drag=false;
   tb.addEventListener("pointerdown",e=>{ if(e.target.classList.contains("light"))return;
