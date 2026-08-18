@@ -424,17 +424,17 @@ function runScene(){
   a1.innerHTML=a1.textContent.split(" ").map(w=>'<span class="w" style="display:inline-block">'+w+'</span>').join(" ");
   const tl=gsap.timeline();
   tl.to("#cue-j",{opacity:1,y:0,duration:.5,ease:"power2.out"},0)
-    .call(()=>{ sfx("sfx_typing",.35); typeInto($("jline"),"Hey chat, after years of developing AI software for underserved populations across the globe, I\u2019m pivoting to full-time AI research. The stakes are simply too high not to. Can you update my portfolio so hiring managers can see what I\u2019ve been cooking?",16,()=>{$("jcaret").style.display="none";}); },null,.4)
-    .to("#cue-think",{opacity:1,y:0,duration:.45},4.7)
-    .to(".tdots i",{y:-6,duration:.3,ease:"sine.inOut",stagger:{each:.11,yoyo:true,repeat:12}},4.9)
-    .to("#thinkrow .spark",{rotate:360,duration:3.0,ease:"none"},4.8)
-    .to("#cue-think",{opacity:0,duration:.3},7.7)
-    .set("#cue-think",{visibility:"hidden"},8.0)
-    .to("#cue-a1",{opacity:1,y:0,duration:.3},7.85)
-    .fromTo("#a1line .w",{opacity:0,y:8},{opacity:1,y:0,duration:.3,stagger:.05,ease:"power2.out"},7.95)
-    .call(()=>$("au1").play().catch(()=>{}),null,7.95)
-    .call(()=>{$("enterwrap").style.display="block";},null,8.8)
-    .fromTo("#enterbtn",{opacity:0,scale:.9},{opacity:1,scale:1,duration:.5,ease:"back.out(1.7)"},8.9);
+    .call(()=>{ sfx("sfx_typing",.35); typeInto($("jline"),"Hey Chat, I\u2019m looking at prospective careers in AI Research. Can you update my portfolio to integrate my recent work and projects?",24,()=>{$("jcaret").style.display="none";}); },null,.4)
+    .to("#cue-think",{opacity:1,y:0,duration:.45},3.8)
+    .to(".tdots i",{y:-6,duration:.3,ease:"sine.inOut",stagger:{each:.11,yoyo:true,repeat:12}},4.0)
+    .to("#thinkrow .spark",{rotate:360,duration:3.0,ease:"none"},3.9)
+    .to("#cue-think",{opacity:0,duration:.3},6.8)
+    .set("#cue-think",{visibility:"hidden"},7.1)
+    .to("#cue-a1",{opacity:1,y:0,duration:.3},6.95)
+    .fromTo("#a1line .w",{opacity:0,y:8},{opacity:1,y:0,duration:.3,stagger:.05,ease:"power2.out"},7.05)
+    .call(()=>$("au1").play().catch(()=>{}),null,7.05)
+    .call(()=>{$("enterwrap").style.display="block";},null,7.9)
+    .fromTo("#enterbtn",{opacity:0,scale:.9},{opacity:1,scale:1,duration:.5,ease:"back.out(1.7)"},8.0);
 }
 function enterDesktop(){
   if($("desktop").classList.contains("on")) return;
