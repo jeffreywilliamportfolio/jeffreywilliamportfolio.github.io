@@ -275,14 +275,10 @@
       </div>
       <div class="cue ai" id="cue-a1">
         <span class="who">ASSISTANT</span>
-        <span class="line" id="a1line">On it. Give me a second to look back through your work.</span>
+        <span class="line" id="a1line">Got it! The portfolio is ready. Mobile Apps, SaaS Suites, Research Papers and Resume. Click below to enter!</span>
       </div>
     </div>
     <div id="statebox"><div id="staterow"><span id="stateicon"></span><span id="statetext"></span><span id="statecite"></span></div></div>
-    <div class="cue ai" id="cue-a2">
-      <span class="who">ASSISTANT</span>
-      <span class="line">And you must be one of the people he mentioned &mdash; welcome. Everything&rsquo;s set up on his desk. Come take a look.</span>
-    </div>
     <div id="enterwrap"><button id="enterbtn" type="button">Enter Portfolio</button></div>
   </div>
 </div>
@@ -429,33 +425,21 @@ function runScene(){
   tl.to("#cue-j",{opacity:1,y:0,duration:.5,ease:"power2.out"},0)
     .call(()=>{ sfx("sfx_typing",.35); typeInto($("jline"),"hey, i need to show my portfolio to some job prospects. can you walk them through it?",42,()=>{$("jcaret").style.display="none";}); },null,.4)
     .to("#cue-think",{opacity:1,y:0,duration:.45},4.3)
-    .to(".tdots i",{y:-6,duration:.3,ease:"sine.inOut",stagger:{each:.11,yoyo:true,repeat:7}},4.5)
-    .to("#thinkrow .spark",{rotate:360,duration:2.4,ease:"none"},4.4)
-    .to("#cue-think",{opacity:0,duration:.3},6.9)
-    .set("#cue-think",{visibility:"hidden"},7.2)
-    .to("#cue-a1",{opacity:1,y:0,duration:.3},7.05)
-    .fromTo("#a1line .w",{opacity:0,y:8},{opacity:1,y:0,duration:.3,stagger:.05,ease:"power2.out"},7.1)
-    .call(()=>$("au1").play().catch(()=>{}),null,7.1)
-    .call(()=>{$("statebox").style.display="block"; setState(0);},null,9.5)
-    .fromTo("#statebox",{opacity:0,y:12},{opacity:1,y:0,duration:.45,ease:"power2.out"},9.5);
-  STATES.forEach((st,i)=>{ if(i===0) return; const t=9.9+i*STATE_DUR;
-    tl.call(()=>sfx("sfx_whoosh",.18),null,t)
-      .to("#staterow",{opacity:0,y:-8,duration:.22,ease:"power2.in"},t)
-      .call(()=>setState(i),null,t+.24)
-      .fromTo("#staterow",{opacity:0,y:10},{opacity:1,y:0,duration:.3,ease:"power2.out"},t+.26); });
-  const tEnd=9.9+(STATES.length-1)*STATE_DUR+LAST_DUR;
-  tl.to("#statebox",{opacity:0,y:-8,duration:.35,onComplete:()=>{$("statebox").style.display="none";}},tEnd)
-    .to("#cue-a2",{opacity:1,duration:.5},tEnd+.15)
-    .call(()=>$("au2").play().catch(()=>{}),null,tEnd+.15)
-    .call(()=>{$("enterwrap").style.display="block";},null,tEnd+2.1)
-    .fromTo("#enterbtn",{opacity:0,scale:.9},{opacity:1,scale:1,duration:.5,ease:"back.out(1.7)"},tEnd+2.2)
-    .call(enterDesktop,null,tEnd+7.0);
+    .to(".tdots i",{y:-6,duration:.3,ease:"sine.inOut",stagger:{each:.11,yoyo:true,repeat:11}},4.5)
+    .to("#thinkrow .spark",{rotate:360,duration:3.0,ease:"none"},4.4)
+    .to("#cue-think",{opacity:0,duration:.3},7.6)
+    .set("#cue-think",{visibility:"hidden"},7.9)
+    .to("#cue-a1",{opacity:1,y:0,duration:.3},7.75)
+    .fromTo("#a1line .w",{opacity:0,y:8},{opacity:1,y:0,duration:.3,stagger:.05,ease:"power2.out"},7.8)
+    .call(()=>$("au1").play().catch(()=>{}),null,7.8)
+    .call(()=>{$("enterwrap").style.display="block";},null,8.5)
+    .fromTo("#enterbtn",{opacity:0,scale:.9},{opacity:1,scale:1,duration:.5,ease:"back.out(1.7)"},8.6);
 }
 function enterDesktop(){
   if($("desktop").classList.contains("on")) return;
   timers.forEach(clearTimeout);
   if(window.gsap) gsap.globalTimeline.clear();
-  ["au1","au2"].forEach(a=>{try{$(a).pause()}catch(e){}});
+  ["au2"].forEach(a=>{try{$(a).pause()}catch(e){}});
   $("stage").style.display="none"; $("skipbtn").style.display="none";
   $("desktop").classList.add("on"); buildDesktop();
   sfx("sfx_chime",.35);
@@ -474,7 +458,6 @@ function enterDesktop(){
     gsap.to("#aur1",{x:"-6vw",y:"5vw",duration:26,yoyo:true,repeat:-1,ease:"sine.inOut"});
     gsap.to("#aur2",{x:"7vw",y:"-4vw",duration:31,yoyo:true,repeat:-1,ease:"sine.inOut"});
   }
-  later(()=>{const a=new Audio(ASSETS.line4);a.volume=.9;a.play().catch(()=>{});},900);
   if(matchMedia("(min-width:721px)").matches){
     later(()=>{const ic=document.querySelector('.icon[data-id="banana"]');
       openWin(PROJECTS[1], ic||undefined);},1700);
