@@ -36,12 +36,11 @@
         copy: "Papers, datasets, and corrections remain together. The failed explanation is not hidden; it becomes the next instrument.",
         facts: [["mode", "evidence-first"], ["signature", "self-correction"]]
       },
-      artifacts: ["confound"],
+      artifacts: [],
       files: [
         { title: "Self-Copy Regime", meta: "Zenodo paper · Hugging Face data", type: "PDF", kind: "pdf", tag: "paper" },
         { title: "Survival of the Fitted", meta: "Jacobian Lens transfer · dataset linked", type: "PDF", kind: "pdf", tag: "★ fitted lens" },
         { title: "Minimum Perturbation in Jacobian Space", meta: "safety continuations · working draft", type: "TEX", kind: "data", tag: "unfinished" },
-        { title: "A Note for Those Doing Routing Research", meta: "position confound · correction record", type: "PDF", kind: "pdf", tag: "★ confound", artifact: "confound" },
         { title: "DMRA", meta: "dialect bias safety-audit protocol", type: "PDF", kind: "pdf", tag: "paper" }
       ]
     },
@@ -84,13 +83,6 @@
   };
 
   const artifactData = {
-    confound: {
-      image: "assets/position-confound.png",
-      kicker: "MARCH 05 · METHODOLOGICAL CORRECTION",
-      title: "The replication was real. It replicated the confound.",
-      copy: "A compelling routing-entropy hierarchy survived replication, then disappeared when Jeffrey matched token position. The correction became more important than the original headline.",
-      source: "Position-confound record · DeepSeek V3.1 + Qwen 397B"
-    },
     mindvolume: {
       image: "assets/mindvolume-field.webp",
       kicker: "INSTRUMENT · VOCABULARY SPACE",

@@ -342,16 +342,6 @@ const PROJECTS=[
   blurb:"A lens fitted on one checkpoint reads its sibling: cross-checkpoint transfer, verified with hard identity checks, reading and steering across the version gap. Published on Zenodo. The instrumentation behind the interpretability work on this desk.",
   pages:seq("lens_p",6),
   note:"the same lens reads the next model over. that is the finding."},
- {id:"entropy", label:"Routing Entropy", kind:"doc", thumb:"entropy_p00",
-  title:"When Routing Entropy Tracks Length, Not Complexity: A Sequence-Position Confound in MoE Routing Analyses",
-  blurb:"A self-refutation: our earlier complexity\u2013routing-entropy result reverses once a sequence-position confound is measured correctly. The corrected analysis replicates across DeepSeek V3.1 and Qwen3.5-397B. Published on Zenodo, CC BY 4.0.",
-  doi:"10.5281/zenodo.20779602", pages:seq("entropy_p",6),
-  note:"the paper that retired our own earlier claim. on purpose."},
- {id:"genhalf", label:"Generation Half", kind:"doc", thumb:"genhalf_p00",
-  title:"The Generation Half: MoE Expert Specialization Is Invisible in Prefill and Emerges During Generation",
-  blurb:"Expert specialization that a widely cited negative result declared absent is real \u2014 it just lives in generation, not prefill. Rebuttal with mechanism, replicating at 122B. Published on Zenodo, CC BY 4.0.",
-  doi:"10.5281/zenodo.20779604", pages:seq("genhalf_p",6),
-  note:"everyone measured the prefill half. the other half is where it happens."},
  {id:"gate", label:"Safety Gate", kind:"doc", thumb:"gate_p00",
   title:"No Single Safety Gate: Harm-Refusal Routing Is Distributed and Survives Lead-Expert Suppression",
   blurb:"Suppressing the lead \u201crefusal expert\u201d does not unlock harm: routing reallocates and harmful completions stay at zero. Refusal is a crowd, not a gate. Published on Zenodo, CC BY 4.0.",
@@ -576,13 +566,11 @@ function openWin(p,fromEl){
       '<div class="ffoot">Deployed for the Gift Connect organization; links available on request.</div>';
   }else{
     body='<div class="prose">'+
-     '<p>Independent AI-interpretability researcher in Salt Lake City. Audio-engineering degree, four years as a full-stack/AI engineer for a nonprofit. In five months of self-funded work on rented GPUs: a confound discovery that killed six stages of his own results and forced a methodology rebuild; a cross-model routing effect replicated on six architectures from four labs; the discovery and causal characterization of a single interpretable expert (E114) in Qwen3.5-35B; a cross-scale replication that honestly <em>bounded</em> the result; DOI’d preprints including two self-correcting methods papers; and public artifacts that make the work explorable in under a minute.</p>'+
+     '<p>Independent AI-interpretability researcher in Salt Lake City. Audio-engineering degree, four years as a full-stack/AI engineer for a nonprofit. In five months of self-funded work on rented GPUs: a cross-model routing effect replicated on six architectures from four labs; the discovery and causal characterization of a single interpretable expert (E114) in Qwen3.5-35B; a cross-scale replication that honestly <em>bounded</em> the result; DOI’d preprints including a self-correcting methods paper; and public artifacts that make the work explorable in under a minute.</p>'+
      '<p>The through-line: every headline result was followed by the control that could kill it, and the killings were published at equal prominence.</p>'+
      '<h3>Preprints (Zenodo)</h3><ul class="mono">'+
       [["21892999","Self-copy regime — in-context availability reorganizes MoE routing"],
        ["20709736","E114 program compendium"],
-       ["20779602","Token-position confound (methods, self-correcting)"],
-       ["20779604","Expert specialization under generation"],
        ["20786891","Distributed safety routing"],
        ["20449546","DMRA"],
        ["20709561","Machine minds: an ethical threshold"]]
