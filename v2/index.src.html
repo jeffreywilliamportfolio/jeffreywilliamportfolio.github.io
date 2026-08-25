@@ -325,7 +325,7 @@ function glyph(p){
 const seq=(k,n)=>Array.from({length:n},(_,i)=>ASSETS[k+String(i).padStart(2,"0")]);
 const PROJECTS=[
  {id:"selfcopy", label:"Self-Copy Regime", kind:"doc", thumb:"selfcopy_p00",
-  title:"In-Context Availability Reorganizes MoE Expert Routing: A Cross-Generation Study in Qwen3.5 and Qwen3.6",
+  title:"In-Context Availability Reorganizes Expert Routing: A Measurement Confound for Multi-Turn Evaluations of Mixture-of-Experts Language Models",
   blurb:"Whether a generated span is composed fresh or literally reused from the model's own context is legible in expert routing: reuse reorganizes expert selection at scale, under a rule frozen before capture, replicating across seeds, registers, and an independent inference stack. Published on Zenodo, CC BY 4.0.",
   doi:"10.5281/zenodo.21892999", pages:seq("selfcopy_p",10),
   note:"one claim, three seeds, an independent rig. it held."},
@@ -342,13 +342,13 @@ const PROJECTS=[
   blurb:"A lens fitted on one checkpoint reads its sibling: cross-checkpoint transfer, verified with hard identity checks, reading and steering across the version gap. Published on Zenodo. The instrumentation behind the interpretability work on this desk.",
   pages:seq("lens_p",6),
   note:"the same lens reads the next model over. that is the finding."},
- {id:"gate", label:"Safety Gate", kind:"doc", thumb:"gate_p00",
-  title:"No Single Safety Gate: Harm-Refusal Routing Is Distributed and Survives Lead-Expert Suppression",
+ {id:"gate", label:"Refusal Routing", kind:"doc", thumb:"gate_p00",
+  title:"Suppressing the Leading Refusal-Associated Expert Index at Every Layer Redistributes Routing and Leaves Refusal Intact in a Mixture-of-Experts Model",
   blurb:"Suppressing the lead \u201crefusal expert\u201d does not unlock harm: routing reallocates and harmful completions stay at zero. Refusal is a crowd, not a gate. Published on Zenodo, CC BY 4.0.",
   doi:"10.5281/zenodo.20786891", pages:seq("gate_p",7),
   note:"we tried to break the gate. the gate turned out to be a crowd."},
  {id:"dmra", label:"DMRA Protocol", kind:"doc", thumb:"dmra_p00",
-  title:"The Dialect-Marked Response Audit: A Matched-Pair Protocol for Isolating Dialect-Associated Differences in Safety-Critical Support",
+  title:"Bundled Dialect Contrasts Measure a Mixture: A Feature-Isolating Matched-Pair Audit of Safety-Critical Support in Language Models",
   blurb:"A six-stage audit protocol for safety-support equivalence across dialect-marked prompts \u2014 each stage derived from a documented failure of our own earlier audit. Case study: a token-matched pair where the base model gives one user a crisis hotline and the other none, and a keyword safety screen whose base-model \u201cunsafe\u201d flags were 100% false alarms.",
   pdf:"dmra-protocol-v3.1.pdf", pages:seq("dmra_p",8),
   note:"every stage exists because skipping it burned us."},
@@ -571,7 +571,7 @@ function openWin(p,fromEl){
      '<h3>Preprints (Zenodo)</h3><ul class="mono">'+
       [["21892999","Self-copy regime — in-context availability reorganizes MoE routing"],
        ["20709736","E114 program compendium"],
-       ["20786891","Distributed safety routing"],
+       ["20786891","Refusal-expert index suppression: routing redistributes, refusal intact"],
        ["20449546","DMRA"],
        ["20709561","Machine minds: an ethical threshold"]]
       .map(d=>'<li><a href="https://doi.org/10.5281/zenodo.'+d[0]+'" target="_blank" rel="noopener">10.5281/zenodo.'+d[0]+'</a> — '+d[1]+"</li>").join("")+
