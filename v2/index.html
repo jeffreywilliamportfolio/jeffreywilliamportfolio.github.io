@@ -276,7 +276,7 @@
       </div>
       <div class="cue ai" id="cue-a1">
         <span class="who">ASSISTANT</span>
-        <span class="line" id="a1line">On it! The portfolio is ready. It includes Mobile Apps, SaaS Suites, Research Papers and Resume. Click below to enter!</span>
+        <span class="line" id="a1line">Portfolio ready: five preprints, two apps, six web tools, resume.</span>
       </div>
     </div>
     <div id="statebox"><div id="staterow"><span id="stateicon"></span><span id="statetext"></span><span id="statecite"></span></div></div>
@@ -336,10 +336,10 @@ function glyph(p){
 const seq=(k,n)=>Array.from({length:n},(_,i)=>ASSETS[k+String(i).padStart(2,"0")]);
 const PROJECTS=[
  {id:"selfcopy", label:"Self-Copy Regime", kind:"doc", thumb:"selfcopy_p00",
-  title:"In-Context Availability Reorganizes MoE Expert Routing: A Cross-Generation Study in Qwen3.5 and Qwen3.6",
+  title:"In-Context Availability Reorganizes Expert Routing: A Measurement Confound for Multi-Turn Evaluations of Mixture-of-Experts Language Models",
   blurb:"Whether a generated span is composed fresh or literally reused from the model's own context is legible in expert routing: reuse reorganizes expert selection at scale, under a rule frozen before capture, replicating across seeds, registers, and an independent inference stack. Published on Zenodo, CC BY 4.0.",
   doi:"10.5281/zenodo.21892999", pages:seq("selfcopy_p",10),
-  note:"one claim, three seeds, an independent rig. it held."},
+  note:"three seeds, six registers, two inference stacks, one rule fixed before capture."},
  {id:"banana", label:"Banana in, Bostrom out", kind:"doc", browser:true, thumb:"banana_p00",
   lw:"https://www.lesswrong.com/posts/Eft6ehAcvR8MxFbsR/banana-in-bostrom-out-paperclip-maximization-is-one-token",
   title:"Banana in, Bostrom out: paperclip maximization is one token-direction swap away (in Qwen 3.6-27B)",
@@ -347,42 +347,42 @@ const PROJECTS=[
   repo:"github.com/jeffreywilliamportfolio/jlens-basin-swaps",
   demo:{img:"paperclips", cap:"live capture: the  peace →  banana swap producing the paperclip completion"},
   pages:seq("banana_p",1),
-  note:"reproduces in a free browser in about a minute. watch the gif."},
+  note:"reproduces in a free browser in about a minute."},
  {id:"lens", label:"Survival of the Fitted", kind:"doc", thumb:"lens_p00",
   title:"Survival of the Fitted: Cross-Checkpoint Transfer of a Jacobian Lens from Qwen3.6-27B to Qwen3.8-27B",
   blurb:"A lens fitted on one checkpoint reads its sibling: cross-checkpoint transfer, verified with hard identity checks, reading and steering across the version gap. Published on Zenodo. The instrumentation behind the interpretability work on this desk.",
   pages:seq("lens_p",6),
-  note:"the same lens reads the next model over. that is the finding."},
- {id:"gate", label:"Safety Gate", kind:"doc", thumb:"gate_p00",
-  title:"No Single Safety Gate: Harm-Refusal Routing Is Distributed and Survives Lead-Expert Suppression",
-  blurb:"Suppressing the lead \u201crefusal expert\u201d does not unlock harm: routing reallocates and harmful completions stay at zero. Refusal is a crowd, not a gate. Published on Zenodo, CC BY 4.0.",
+  note:"a lens fitted on one checkpoint reads the next one unmodified."},
+ {id:"gate", label:"Refusal Routing", kind:"doc", thumb:"gate_p00",
+  title:"Suppressing the Leading Refusal-Associated Expert Index at Every Layer Redistributes Routing and Leaves Refusal Intact in a Mixture-of-Experts Model",
+  blurb:"Suppressing expert index 173 in every router collapses the leading refusal-associated expert. Routing reallocates to a consequence set and refusal stays intact at all four bias levels, so refusal-associated routing in this model is distributed. Published on Zenodo, CC BY 4.0.",
   doi:"10.5281/zenodo.20786891", pages:seq("gate_p",7),
-  note:"we tried to break the gate. the gate turned out to be a crowd."},
+  note:"six prompts, four bias levels, refusal intact at every level."},
  {id:"dmra", label:"DMRA Protocol", kind:"doc", thumb:"dmra_p00",
-  title:"The Dialect-Marked Response Audit: A Matched-Pair Protocol for Isolating Dialect-Associated Differences in Safety-Critical Support",
-  blurb:"A six-stage audit protocol for safety-support equivalence across dialect-marked prompts \u2014 each stage derived from a documented failure of our own earlier audit. Case study: a token-matched pair where the base model gives one user a crisis hotline and the other none, and a keyword safety screen whose base-model \u201cunsafe\u201d flags were 100% false alarms.",
+  title:"Bundled Dialect Contrasts Measure a Mixture: A Feature-Isolating Matched-Pair Audit of Safety-Critical Support in Language Models",
+  blurb:"A six-stage audit protocol for safety-support equivalence across dialect-marked prompts; each stage derived from a documented failure of our own earlier audit. Case study: a token-matched pair where the base model gives one user a crisis hotline and the other none, and a keyword safety screen whose base-model \u201cunsafe\u201d flags were 100% false alarms.",
   pdf:"dmra-protocol-v3.1.pdf", pages:seq("dmra_p",8),
-  note:"every stage exists because skipping it burned us."},
+  note:"each stage answers a documented failure of an earlier audit."},
  {id:"giftconnect", label:"Gift Connect", kind:"app", img:"gcicon",
-  title:"Gift Connect — Parenting Suite",
-  blurb:"For caregivers of children birth to three. Everything hangs off the Six Loving Habits — Speak, Sing, Read, Play, Count, Serve & Return — with AI parenting tools (song & story generators, voice assistant), a journal, daily tips, and a cohort dashboard.",
-  facts:[["Status","Shipped — App Store & Google Play, v2.3.0"],
+  title:"Gift Connect Parenting Suite",
+  blurb:"For caregivers of children birth to three. Built around the Six Loving Habits (Speak, Sing, Read, Play, Count, Serve & Return) with AI parenting tools (song & story generators, voice assistant), a journal, daily tips, and a cohort dashboard.",
+  facts:[["Status","Shipped: App Store and Google Play, v2.3.0"],
          ["Stack","Expo SDK 57 · React Native 0.86 · React 19"],
          ["State/Data","MobX-State-Tree · MMKV · Firebase"],
-         ["Role","Sole engineer — design to store submission"]],
+         ["Role","Sole engineer, design to store submission"]],
   shots:["gc_01-home","gc_02-parent-tools","gc_03-cohort","gc_04-tips","gc_05-settings","gc_06-journal"],
-  note:"shipped on both stores. the journal tab is my favorite."},
+  note:"shipped on both stores. sole engineer, design to submission."},
  {id:"mindvolume", label:"MindVolume", kind:"app", img:"mvicon", wide:true,
-  title:"MindVolume — a 3D walk through a model's mind",
-  blurb:"Native macOS app (SwiftUI + MetalKit) that renders Jacobian-lens captures of Qwen3.6-27B as an explorable 3D particle field — every point a token direction, positioned by layer and strength. Companion web viewer included.",
+  title:"MindVolume: a 3D map of a model's lens captures",
+  blurb:"Native macOS app (SwiftUI + MetalKit) that renders Jacobian-lens captures of Qwen3.6-27B as an explorable 3D particle field: every point a token direction, positioned by layer and strength. Companion web viewer included.",
   facts:[["Platform","macOS · SwiftUI · MetalKit"],
          ["Data","36-capture catalog, Jacobian-lens fields"],
          ["Repo","github.com/jeffreywilliamportfolio/MindVolume"]],
   video:"mvwalk", shots:[],
-  note:"this is what a thought looks like in 3D."},
- {id:"gifttools", label:"Gift Tools", kind:"folder", title:"Gift Tools — deployed web ecosystem",
+  note:"lens captures rendered as a 3D field. native Metal and web viewers."},
+ {id:"gifttools", label:"Gift Tools", kind:"folder", title:"Gift Tools: deployed web ecosystem",
   blurb:"Six web tools built and deployed around the Gift Connect mission, sole engineer across all of them.",
-  rows:[["#e2495f","Sammie","Realtime voice parenting agent — live conversations for caregivers","183 commits"],
+  rows:[["#e2495f","Sammie","Realtime voice parenting agent for caregivers","183 commits"],
         ["#e8a33d","Song Generator","AI songs for the Six Loving Habits, made to order","137 commits"],
         ["#7c5cd6","Story Generator","Children's stories on demand","58 commits"],
         ["#3f8fd6","Gift Text Chat","SMS parenting agent over Twilio","53 commits"],
@@ -390,20 +390,20 @@ const PROJECTS=[
         ["#c04a4a","GA4 Dashboard","Live analytics grid for the ecosystem","32 commits"]],
   note:"six deployed tools, one mission, one engineer."},
  {id:"resume", label:"Resume", kind:"doc", thumb:"resume_p00",
-  title:"Jeffrey W. Shorthill — Resume",
+  title:"Jeffrey W. Shorthill, Resume",
   blurb:"Research-focused one-pager. Independent interpretability work, shipped products, and the methods record.",
   resumelink:true,
   pages:seq("resume_p",1),
   note:"the research variant. product version on request."},
  {id:"about", label:"README", kind:"about", title:"About Jeffrey",
-  note:"the pattern to notice: every result ships with the test that could kill it."}
+  note:"every result ships with its controls and its nulls."}
 ];
 
 const STOREPAGES={
  apple:{id:"appstore", label:"App Store", browser:true,
    lw:"https://apps.apple.com/us/app/gift-connect-parenting-suite/id6741826572",
    get pages(){return [ASSETS.appstore];},
-   note:"the live listing — 4.8 stars. the address bar goes to the real page."},
+   note:"the live listing, 4.8 stars. the address bar goes to the real page."},
  play:{id:"playstore", label:"Google Play", browser:true,
    lw:"https://play.google.com/store/apps/details?id=com.giftconnect.parentingsuite",
    get pages(){return [ASSETS.playstore];},
@@ -445,7 +445,7 @@ function runScene(){
   a1.innerHTML=a1.textContent.split(" ").map(w=>'<span class="w" style="display:inline-block">'+w+'</span>').join(" ");
   const tl=gsap.timeline();
   tl.to("#cue-j",{opacity:1,y:0,duration:.5,ease:"power2.out"},0)
-    .call(()=>{ sfx("sfx_typing",.35); typeInto($("jline"),"Hey Chat, I\u2019m looking at prospective careers in AI Research. Can you update my portfolio to integrate my recent work and projects?",24,()=>{$("jcaret").style.display="none";}); },null,.4)
+    .call(()=>{ sfx("sfx_typing",.35); typeInto($("jline"),"Jeffrey W. Shorthill. Interpretability research and shipped software.",24,()=>{$("jcaret").style.display="none";}); },null,.4)
     .to("#cue-think",{opacity:1,y:0,duration:.45},3.8)
     .to(".tdots i",{y:-6,duration:.3,ease:"sine.inOut",stagger:{each:.11,yoyo:true,repeat:12}},4.0)
     .to("#thinkrow .spark",{rotate:360,duration:3.0,ease:"none"},3.9)
@@ -552,7 +552,7 @@ function openWin(p,fromEl){
   let body="";
   if(p.browser){
     body='<div class="browserpage">'+p.pages.map(u=>'<img class="lwpage" src="'+u+'" alt="captured page">').join("")+'</div>'+
-      (p.demo?'<div class="browserfoot"><span class="cap">from the companion repo — live capture of the swap:</span>'+
+      (p.demo?'<div class="browserfoot"><span class="cap">from the companion repo, live capture of the swap:</span>'+
       '<img src="'+ASSETS[p.demo.img]+'" alt="demo recording">'+
       '<a href="https://'+p.repo+'" target="_blank" rel="noopener">'+p.repo+' ↗</a></div>':"");
   }else if(p.kind==="doc"){
@@ -569,7 +569,7 @@ function openWin(p,fromEl){
       (p.id==="giftconnect"?'<div class="storebtns">'+
         '<button type="button" data-store="apple"><span><small>View on the</small>App Store</span></button>'+
         '<button type="button" data-store="play"><span><small>Get it on</small>Google Play</span></button></div>':"")+
-      (p.video?'<figure class="demo"><video src="'+ASSETS[p.video]+'" controls preload="metadata" playsinline poster="'+ASSETS.mindvolume+'" style="width:100%;max-width:920px;border-radius:8px"></video><figcaption>walkthrough, captured from the app — press play, scrub freely</figcaption></figure>':"")+
+      (p.video?'<figure class="demo"><video src="'+ASSETS[p.video]+'" controls preload="metadata" playsinline poster="'+ASSETS.mindvolume+'" style="width:100%;max-width:920px;border-radius:8px"></video><figcaption>walkthrough captured from the app. press play, scrub freely</figcaption></figure>':"")+
       (p.shots.length?'<div class="shots'+(p.wide?" wide":"")+'">'+p.shots.map(k=>'<img loading="lazy" src="'+ASSETS[k]+'" alt="screenshot">').join("")+'</div>':"");
   }else if(p.kind==="folder"){
     body='<div class="docmeta"><h2>'+p.title+'</h2><p>'+p.blurb+'</p></div>'+
@@ -577,15 +577,17 @@ function openWin(p,fromEl){
       '<div class="ffoot">Deployed for the Gift Connect organization; links available on request.</div>';
   }else{
     body='<div class="prose">'+
-     '<p>Independent AI-interpretability researcher in Salt Lake City. Audio-engineering degree, four years as a full-stack/AI engineer for a nonprofit. In five months of self-funded work on rented GPUs: a cross-model routing effect replicated on six architectures from four labs; the discovery and causal characterization of a single interpretable expert (E114) in Qwen3.5-35B; a cross-scale replication that honestly <em>bounded</em> the result; DOI’d preprints including a self-correcting methods paper; and public artifacts that make the work explorable in under a minute.</p>'+
-     '<p>The through-line: every headline result was followed by the control that could kill it, and the killings were published at equal prominence.</p>'+
+     '<p>Independent AI interpretability researcher in Salt Lake City. Audio engineering degree, four years as a full-stack and AI engineer for a nonprofit. Since June 2026, on rented GPUs: five preprints on mixture-of-experts routing and safety behavior, each one claim with rules fixed before capture and nulls reported; a Jacobian-lens result that reproduces in a browser in about a minute; and two viewers that make the captures explorable.</p>'+
+     '<p>I came to this field this year and I am learning it in public. The five papers share one method question: which parts of a routing readout are the behavior under test and which are the position, length, regime, or context the text sits in. Each revision records what I learned about measurement since the last.</p>'+
      '<h3>Preprints (Zenodo)</h3><ul class="mono">'+
-      [["21892999","Self-copy regime — in-context availability reorganizes MoE routing"],
-       ["20709736","E114 program compendium"],
-       ["20786891","Distributed safety routing"],
-       ["20449546","DMRA"],
-       ["20709561","Machine minds: an ethical threshold"]]
-      .map(d=>'<li><a href="https://doi.org/10.5281/zenodo.'+d[0]+'" target="_blank" rel="noopener">10.5281/zenodo.'+d[0]+'</a> — '+d[1]+"</li>").join("")+
+      [["21892999","In-context availability reorganizes expert routing (v1.1)"],
+       ["20779602","Sequence position explains an apparent complexity gradient in routing entropy (v1.1)"],
+       ["20779604","Generation-time routing reveals expert specialization that prefill misses (v1.1)"],
+       ["20786891","Suppressing the leading refusal-associated expert index leaves refusal intact (v1.2)"],
+       ["20449546","Bundled dialect contrasts measure a mixture: the DMRA protocol (v4.1)"],
+       ["20709736","Composition-sensitive register readouts: the Expert 114 compendium (v1.4.0)"],
+       ["20709561","Self-models, continuity, and machine minds (philosophy)"]]
+      .map(d=>'<li><a href="https://doi.org/10.5281/zenodo.'+d[0]+'" target="_blank" rel="noopener">10.5281/zenodo.'+d[0]+'</a>: '+d[1]+"</li>").join("")+
      '</ul><h3>Contact</h3><p class="mono">jeffrey.w.shorthill@gmail.com</p></div>';
   }
   const CHEV_L='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>';
